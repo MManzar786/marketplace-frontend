@@ -1,1 +1,47 @@
-<p-menubar [model]="items"> </p-menubar>
+<p-menubar [model]="items">
+  <ng-template pTemplate="start">
+    <ul class="flex items-center justify-end">
+      <img src="assets/" height="40" class="p-mr-2" />
+      <li class="mr-6">
+        <a
+          routerLink="/home"
+          class="ml-8 flex items-center text-gray-500 hover:text-gray-900"
+        >
+          Marketplace
+        </a>
+      </li>
+    </ul>
+  </ng-template>
+  <ng-template pTemplate="end">
+    <ul class="flex items-center justify-end">
+      <!-- <li class="mr-6">
+        <a href="#" class="text-gray-500 hover:text-gray-900">Marketplace</a>
+      </li> -->
+      <li class="mr-6">
+        <a
+          routerLink="/cart"
+          class="flex items-center text-gray-500 hover:text-gray-900"
+        >
+          <i class="pi pi-shopping-cart mr-1">
+            <p>1</p>
+          </i>
+          Cart
+        </a>
+      </li>
+      <li class="mr-6">
+        <a
+          routerLink="/auth/sign-in"
+          class="flex items-center text-gray-500 hover:text-gray-900"
+        >
+          <i class="pi pi-sign-in mr-1"></i>
+          Sign in
+        </a>
+      </li>
+      <li class="mr-6" *ngIf="token$ | async">
+        <a class="flex items-center text-gray-500 hover:text-gray-900">
+          Logout
+        </a>
+      </li>
+    </ul>
+  </ng-template>
+</p-menubar>

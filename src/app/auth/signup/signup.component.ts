@@ -25,7 +25,6 @@ export class SignupComponent implements OnInit {
       confirmPassword: new FormControl('', [
         Validators.required,
         Validators.minLength(8),
-        (c) => passwordMatchValidator('password', 'confirmPassword'),
       ]),
     });
   }
