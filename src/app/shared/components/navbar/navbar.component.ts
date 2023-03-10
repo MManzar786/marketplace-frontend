@@ -19,7 +19,8 @@ export class NavbarComponent implements OnInit {
       },
       {
         label: 'Sign In',
-        routerLink: '/auth',
+        routerLink: '/auth/sign-in',
+        styleClass: 'p-menuitem-right',
       },
     ];
   }
