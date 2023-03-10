@@ -28,7 +28,7 @@
           Cart
         </a>
       </li>
-      <li class="mr-6">
+      <li class="mr-6" *ngIf="!(token$ | async)">
         <a
           routerLink="/auth/sign-in"
           class="flex items-center text-gray-500 hover:text-gray-900"
@@ -38,7 +38,10 @@
         </a>
       </li>
       <li class="mr-6" *ngIf="token$ | async">
-        <a class="flex items-center text-gray-500 hover:text-gray-900">
+        <a
+          (click)="onLogoutClick()"
+          class="flex items-center text-gray-500 hover:text-gray-900"
+        >
           Logout
         </a>
       </li>

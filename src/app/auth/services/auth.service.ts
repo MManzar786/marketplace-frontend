@@ -8,7 +8,7 @@ import { environment } from 'src/environments/environment';
 export class AuthService {
   constructor(private http: HttpClient) {}
   signin(email: string, password: string) {
-    return this.http.post(`${environment.backendUrl}api/user/signin`, {
+    return this.http.post(`${environment.backendUrl}api/user/login`, {
       email,
       password,
     });

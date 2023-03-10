@@ -19,8 +19,8 @@ const _authReducer = createReducer(
   on(loginSuccess, (state, { loginSuccessResponse }) => {
     return {
       ...state,
-      token: loginSuccessResponse.token,
-      user: loginSuccessResponse.user,
+      token: loginSuccessResponse.data.accessToken,
+      user: loginSuccessResponse.data,
     };
   }),
   on(loginFailure, (state, { error }) => {
