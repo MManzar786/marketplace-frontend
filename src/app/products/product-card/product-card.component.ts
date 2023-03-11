@@ -10,7 +10,6 @@ import { CartItemI } from 'src/app/cart/model/cart.model';
   styleUrls: ['./product-card.component.css'],
 })
 export class ProductCardComponent {
-  // TODO
   @Input() product!: ProductI;
   constructor(private store: Store) {}
 

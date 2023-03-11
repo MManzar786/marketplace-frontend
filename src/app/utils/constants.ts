@@ -15,3 +15,6 @@ export const PAGE_SIZE_DEFAULT = 10;
 export const PAGE_SIZE_OPTION_DEFAULT = [PAGE_SIZE_DEFAULT, 20, 30];
 // http
 export const SUCCESS_STATUS_CODE = 200;
+
+export const INCREMENT_OPERATOR = '+';
+export const DECREMENT_OPERATOR = '-';

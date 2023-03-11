@@ -4,6 +4,10 @@ import { Observable } from 'rxjs';
 import { ProductI } from 'src/app/products/model/product.model';
 import * as cartActions from 'src/app/state/cart/cart.action';
 import * as cartSelector from 'src/app/state/cart/cart.selector';
+import {
+  DECREMENT_OPERATOR,
+  INCREMENT_OPERATOR,
+} from 'src/app/utils/constants';
 import { CartItemI } from '../model/cart.model';
 
 @Component({
@@ -21,5 +25,32 @@ export class CartComponent implements OnInit {
   removeFromCart(_t7: ProductI) {}
   checkout() {
     throw new Error('Method not implemented.');
+  }
+
+  updateCartItem(operator: string, item: CartItemI) {
+    switch (operator) {
+      case INCREMENT_OPERATOR:
+        {
+          let quantity = item.quantity + 1;
+          let cartItem = { item: item.item, quantity: quantity };
+          this.store.dispatch(
+            cartActions.updateCartItem({
+              item: cartItem,
+              quantityOperator: INCREMENT_OPERATOR,
+            })
+          );
+        }
+        break;
+
+      default:
+        let quantity = item.quantity - 1;
+        let cartItem = { item: item.item, quantity: quantity };
+        this.store.dispatch(
+          cartActions.updateCartItem({
+            item: cartItem,
+            quantityOperator: DECREMENT_OPERATOR,
+          })
+        );
+    }
   }
 }
