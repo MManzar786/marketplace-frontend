@@ -21,9 +21,16 @@ export class ProductService {
     );
   }
 
-  seacrhProducts(skip: number, limit: number, searchStr: string) {
+  // TODO
+  // add in Api selectedCategory option
+  seacrhProducts(
+    skip: number,
+    limit: number,
+    searchStr: string,
+    selectedCategory?: string
+  ) {
     return this.http.get(
-      `https://dummyjson.com/products/search?q=/${searchStr}?limit=${limit}&skip=${skip}`
+      `https://dummyjson.com/products/search?q=${searchStr}&limit=${limit}&skip=${skip}`
     );
   }
 }

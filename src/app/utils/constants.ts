@@ -12,6 +12,6 @@ export const LIMIT_DEFAULT = 10;
 export const SKIP_DEFAULT = 0;
 export const PAGE_NO_DEFAULT = 0;
 export const PAGE_SIZE_DEFAULT = 10;
-export const PAGE_SIZE_OPTION_DEFAULT = [10, 20, 20];
+export const PAGE_SIZE_OPTION_DEFAULT = [PAGE_SIZE_DEFAULT, 20, 30];
 // http
 export const SUCCESS_STATUS_CODE = 200;

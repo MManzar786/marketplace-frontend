@@ -21,11 +21,6 @@ export const loadProductsByCategory = createAction(
   props<{ skip: number; limit: number; category: string }>()
 );
 
-export const seacrhProducts = createAction(
-  '[Product Page] Load Products By Search',
-  props<{ skip: number; limit: number; searchString: string }>()
-);
-
 export const loadProductsSuccess = createAction(
   '[Products API] Product Load Success',
   props<{ products: ProductI[]; totalProductsCount: number }>()
@@ -34,4 +29,19 @@ export const loadProductsSuccess = createAction(
 export const loadProductsFailure = createAction(
   '[Products API] Product Load Failure',
   props<{ error: string }>()
+);
+
+export const seacrhProductsRequest = createAction(
+  '[Product Page] Request Load Products By Search',
+  props<{
+    skip: number;
+    limit: number;
+    searchString: string;
+    selectedCategory?: string;
+  }>()
+);
+
+export const seacrhProducts = createAction(
+  '[Product Page] Load Products By Search',
+  props<{ products: ProductI[]; totalProductsCount: number }>()
 );

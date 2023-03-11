@@ -38,13 +38,18 @@ export class ProductEffects {
 
   loadProductBySearch$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(ProductActions.seacrhProducts),
+      ofType(ProductActions.seacrhProductsRequest),
       switchMap((action) =>
         this.productService
-          .seacrhProducts(action.skip, action.limit, action?.searchString)
+          .seacrhProducts(
+            action.skip,
+            action.limit,
+            action?.searchString,
+            action?.selectedCategory
+          )
           .pipe(
             map((successResponse: any) =>
-              ProductActions.loadProductsSuccess({
+              ProductActions.seacrhProducts({
                 products: successResponse.products,
                 totalProductsCount: successResponse.total,
               })

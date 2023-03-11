@@ -2,6 +2,7 @@ import { createReducer, on } from '@ngrx/store';
 import { ProductStateI } from 'src/app/products/model/product.model';
 import {
   ERROR_STATUS_LABEL,
+  LOADING_STATUS_LABEL,
   PENDING_STATUS_LABEL,
   SUCCESS_STATUS_LABEL,
 } from 'src/app/utils/constants';
@@ -9,6 +10,7 @@ import {
   loadProductsFailure,
   loadProductsSuccess,
   seacrhProducts,
+  seacrhProductsRequest,
 } from './product.action';
 
 export const initialState: ProductStateI = {
@@ -35,17 +37,25 @@ const _productReducer = createReducer(
       error: error,
       status: ERROR_STATUS_LABEL,
     };
-  })
+  }),
 
-  // on(seacrhProducts, (state, { products, }) => {
-  //   return {
-  //     ...state,
-  //     products: products,
-  //     totalProductsCount: totalProductsCount,
-  //     error: null,
-  //     status: SUCCESS_STATUS_LABEL,
-  //   };
-  // }),
+  on(seacrhProductsRequest, (state) => {
+    return {
+      ...state,
+      error: null,
+      status: LOADING_STATUS_LABEL,
+    };
+  }),
+
+  on(seacrhProducts, (state, { products, totalProductsCount }) => {
+    return {
+      ...state,
+      products: products,
+      totalProductsCount: totalProductsCount,
+      error: null,
+      status: SUCCESS_STATUS_LABEL,
+    };
+  })
 );
 
 export function productReducer(state: any, action: any) {

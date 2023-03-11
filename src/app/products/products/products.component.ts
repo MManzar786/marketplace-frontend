@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { ProductI } from '../model/product.model';
 import * as productsActions from 'src/app/state/products/product.action';
@@ -25,8 +25,9 @@ export class ProductsComponent implements OnInit {
   pageNo: number = PAGE_NO_DEFAULT;
   pageSizeOptions: number[] = PAGE_SIZE_OPTION_DEFAULT;
   sortField!: string;
-  category!: string;
   products$!: Observable<ProductI[]>;
+  @ViewChild('searchInput', { static: true })
+  searchInput!: ElementRef<HTMLInputElement>;
   categories: categoryI[] = [
     { id: 1, name: 'smartphones' },
     { id: 2, name: 'laptops' },
@@ -37,6 +38,7 @@ export class ProductsComponent implements OnInit {
     { id: 7, name: 'motorcycle' },
     { id: 8, name: 'tops' },
   ];
+  selectedCategory: string = '';
   constructor(private store: Store) {}
 
   ngOnInit(): void {
@@ -63,12 +65,24 @@ export class ProductsComponent implements OnInit {
   }
 
   onChangeCategory(value: categoryI) {
-    this.category = value.name;
+    this.selectedCategory = value.name;
     this.store.dispatch(
       productsActions.loadProducts({
         skip: 0,
         limit: this.pageSize,
-        category: this.category,
+        category: this.selectedCategory,
+      })
+    );
+  }
+
+  onSearchClick() {
+    const searchValue = this.searchInput.nativeElement.value;
+    this.store.dispatch(
+      productsActions.seacrhProductsRequest({
+        skip: 0,
+        limit: LIMIT_DEFAULT,
+        searchString: searchValue,
+        selectedCategory: this.selectedCategory,
       })
     );
   }
