@@ -10,6 +10,8 @@ import { authReducer } from './state/auth/auth.reducer';
 import { EffectsModule } from '@ngrx/effects';
 import { AuthEffects } from './state/auth/auth.effects';
 import { HttpClientModule } from '@angular/common/http';
+import { productReducer } from './state/products/product.reducer';
+import { ProductEffects } from './state/products/product.effects';
 
 @NgModule({
   declarations: [AppComponent],
@@ -19,8 +21,8 @@ import { HttpClientModule } from '@angular/common/http';
     SharedModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    StoreModule.forRoot({ auth: authReducer }),
-    EffectsModule.forRoot([AuthEffects]),
+    StoreModule.forRoot({ auth: authReducer, product: productReducer }),
+    EffectsModule.forRoot([AuthEffects, ProductEffects]),
   ],
   providers: [],
   bootstrap: [AppComponent],

@@ -5,7 +5,7 @@ import { loginFailure, loginSuccess, logout } from './auth.actions';
 // 'any' must be change to interface
 export interface State {
   token: string | null;
-  user: any;
+  user: any | { data: {}; success: boolean; code: number };
   loginError?: string;
 }
 

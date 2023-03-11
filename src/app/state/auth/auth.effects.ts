@@ -33,20 +33,7 @@ export class AuthEffects {
       this.actions$.pipe(
         ofType(AuthActions.loginSuccess),
         tap(({ loginSuccessResponse }) => {
-          this.router.navigateByUrl('/');
-        })
-      ),
-    { dispatch: false }
-  );
-
-  loginFailure$ = createEffect(
-    () =>
-      this.actions$.pipe(
-        ofType(AuthActions.loginFailure),
-        tap((error) => {
-          console.log(error.type);
-
-          alert('Error' + error.error);
+          this.router.navigateByUrl('/home');
         })
       ),
     { dispatch: false }
