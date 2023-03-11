@@ -36,26 +36,24 @@ export class ProductEffects {
     )
   );
 
-  // loadProductByCategory$ = createEffect(
-  //   () =>
-  //     this.actions$.pipe(
-  //       ofType(ProductActions.loadProductsByCategory),
-  //       switchMap((action) =>
-  //         this.productService
-  //           .getProductsByCategory(action.skip, action.limit, action.category)
-  //           .pipe(
-  //             map((successResponse: any) =>
-  //               ProductActions.loadProductsSuccess({
-  //                 products: successResponse.products,
-  //                 totalProductsCount: successResponse.total,
-  //               })
-  //             ),
-  //             catchError((error) =>
-  //               of(ProductActions.loadProductsFailure({ error }))
-  //             )
-  //           )
-  //       )
-  //     ),
-
-  // );
+  loadProductBySearch$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(ProductActions.seacrhProducts),
+      switchMap((action) =>
+        this.productService
+          .seacrhProducts(action.skip, action.limit, action?.searchString)
+          .pipe(
+            map((successResponse: any) =>
+              ProductActions.loadProductsSuccess({
+                products: successResponse.products,
+                totalProductsCount: successResponse.total,
+              })
+            ),
+            catchError((error) =>
+              of(ProductActions.loadProductsFailure({ error }))
+            )
+          )
+      )
+    )
+  );
 }

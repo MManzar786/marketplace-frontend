@@ -1,0 +1,24 @@
+.prod-img {
+  max-height: 300px;
+  height: 300px;
+  width: 80%;
+  display: flex;
+  justify-content: center;
+  overflow-y: hidden;
+  margin: 0 auto;
+}
+.prod-img img {
+  object-fit: contain;
+  object-position: center;
+}
+.carddiv {
+  height: 550px;
+}
+
+.description {
+  height: 60px;
+}
+
+.cardTitle {
+  height: 30px;
+}

@@ -1,0 +1,32 @@
+.cart-icon {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 50px;
+}
+
+.cart {
+  display: flex;
+  justify-content: center;
+  position: relative;
+  height: 40px;
+  align-items: flex-end;
+  margin-right: 10px;
+}
+.cart p {
+  position: absolute;
+  top: 0;
+  margin: 0 auto;
+  background-color: blue;
+  padding: 5px;
+  width: 20px;
+  height: 20px;
+  border-radius: 80%;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.pi-shopping-cart:before {
+  font-size: 18px;
+}

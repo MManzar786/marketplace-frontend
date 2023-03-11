@@ -6,9 +6,9 @@ import {
   SUCCESS_STATUS_LABEL,
 } from 'src/app/utils/constants';
 import {
-  loadProductsByCategory,
   loadProductsFailure,
   loadProductsSuccess,
+  seacrhProducts,
 } from './product.action';
 
 export const initialState: ProductStateI = {
@@ -36,6 +36,16 @@ const _productReducer = createReducer(
       status: ERROR_STATUS_LABEL,
     };
   })
+
+  // on(seacrhProducts, (state, { products, }) => {
+  //   return {
+  //     ...state,
+  //     products: products,
+  //     totalProductsCount: totalProductsCount,
+  //     error: null,
+  //     status: SUCCESS_STATUS_LABEL,
+  //   };
+  // }),
 );
 
 export function productReducer(state: any, action: any) {

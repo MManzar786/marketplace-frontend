@@ -14,4 +14,16 @@ export class ProductService {
     }
     return this.http.get(url);
   }
+
+  getProductsByCategory(skip: number, limit: number, category: string) {
+    return this.http.get(
+      `https://dummyjson.com/products/category/${category}?limit=${limit}&skip=${skip}`
+    );
+  }
+
+  seacrhProducts(skip: number, limit: number, searchStr: string) {
+    return this.http.get(
+      `https://dummyjson.com/products/search?q=/${searchStr}?limit=${limit}&skip=${skip}`
+    );
+  }
 }

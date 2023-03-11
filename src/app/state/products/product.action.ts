@@ -17,8 +17,13 @@ export const loadProducts = createAction(
 );
 
 export const loadProductsByCategory = createAction(
-  '[Product Page] Load Products',
+  '[Product Page] Load Products By Category',
   props<{ skip: number; limit: number; category: string }>()
+);
+
+export const seacrhProducts = createAction(
+  '[Product Page] Load Products By Search',
+  props<{ skip: number; limit: number; searchString: string }>()
 );
 
 export const loadProductsSuccess = createAction(
