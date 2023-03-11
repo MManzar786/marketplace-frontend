@@ -14,20 +14,48 @@ export class ProductEffects {
   ) {}
   loadProduct$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(ProductActions.loadProducts),
+      ofType(
+        ProductActions.loadProducts,
+        ProductActions.loadProductsByCategory
+      ),
       switchMap((action) =>
-        this.productService.loadProducts(action.skip, action.limit).pipe(
-          map((successResponse: any) =>
-            ProductActions.loadProductsSuccess({
-              products: successResponse.products,
-              totalProductsCount: successResponse.total,
-            })
-          ),
-          catchError((error) =>
-            of(ProductActions.loadProductsFailure({ error }))
+        this.productService
+          .getAllProducts(action.skip, action.limit, action?.category)
+          .pipe(
+            map((successResponse: any) =>
+              ProductActions.loadProductsSuccess({
+                products: successResponse.products,
+                totalProductsCount: successResponse.total,
+              })
+            ),
+            catchError((error) =>
+              of(ProductActions.loadProductsFailure({ error }))
+            )
           )
-        )
       )
     )
   );
+
+  // loadProductByCategory$ = createEffect(
+  //   () =>
+  //     this.actions$.pipe(
+  //       ofType(ProductActions.loadProductsByCategory),
+  //       switchMap((action) =>
+  //         this.productService
+  //           .getProductsByCategory(action.skip, action.limit, action.category)
+  //           .pipe(
+  //             map((successResponse: any) =>
+  //               ProductActions.loadProductsSuccess({
+  //                 products: successResponse.products,
+  //                 totalProductsCount: successResponse.total,
+  //               })
+  //             ),
+  //             catchError((error) =>
+  //               of(ProductActions.loadProductsFailure({ error }))
+  //             )
+  //           )
+  //       )
+  //     ),
+
+  // );
 }

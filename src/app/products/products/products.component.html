@@ -1,1 +1,21 @@
-<p>products works!</p>
+<p-dropdown
+  [options]="categories"
+  optionLabel="name"
+  placeholder="Select a Category"
+  (onChange)="onChangeCategory($event.value)"
+></p-dropdown>
+<!-- Product page with multiple rows of product cards -->
+<div class="p-grid">
+  <div class="p-col-12 p-md-6 p-lg-3">
+    <ng-container *ngFor="let product of products$ | async">
+      <app-product-card [product]="product"></app-product-card>
+    </ng-container>
+  </div>
+  <!-- Add more product cards here -->
+</div>
+<p-paginator
+  [rowsPerPageOptions]="pageSizeOptions"
+  [rows]="pageSize"
+  [totalRecords]="totalCount"
+  (onPageChange)="onPageChange($event)"
+></p-paginator>

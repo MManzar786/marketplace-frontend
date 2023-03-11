@@ -9,6 +9,9 @@ export const SUCCESS_STATUS_LABEL = 'success';
 
 // Pagination
 export const LIMIT_DEFAULT = 10;
-export const SKIP_DEFAULT = 10;
+export const SKIP_DEFAULT = 0;
+export const PAGE_NO_DEFAULT = 0;
+export const PAGE_SIZE_DEFAULT = 10;
+export const PAGE_SIZE_OPTION_DEFAULT = [10, 20, 20];
 // http
 export const SUCCESS_STATUS_CODE = 200;

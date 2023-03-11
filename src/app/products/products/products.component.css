@@ -1,0 +1,20 @@
+.product-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  vertical-align: middle;
+}
+
+.product-details h2 {
+  font-size: 1.5rem;
+  margin: 0.5rem 0;
+}
+
+.product-details p {
+  margin: 0.5rem 0;
+}
+
+.product-price {
+  font-weight: bold;
+  font-size: 1.2rem;
+}

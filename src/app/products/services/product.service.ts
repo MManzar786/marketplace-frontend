@@ -7,9 +7,11 @@ import { Injectable } from '@angular/core';
 export class ProductService {
   constructor(private http: HttpClient) {}
 
-  loadProducts(skip: number, limit: number) {
-    return this.http.get(
-      `https://dummyjson.com/products?limit=${limit}&skip=${skip}`
-    );
+  getAllProducts(skip: number, limit: number, category?: string) {
+    let url = `https://dummyjson.com/products?limit=${limit}&skip=${skip}`;
+    if (category) {
+      url = `https://dummyjson.com/products/category/${category}?limit=${limit}&skip=${skip}`;
+    }
+    return this.http.get(url);
   }
 }

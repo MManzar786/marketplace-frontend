@@ -5,7 +5,11 @@ import {
   PENDING_STATUS_LABEL,
   SUCCESS_STATUS_LABEL,
 } from 'src/app/utils/constants';
-import { loadProductsFailure, loadProductsSuccess } from './product.action';
+import {
+  loadProductsByCategory,
+  loadProductsFailure,
+  loadProductsSuccess,
+} from './product.action';
 
 export const initialState: ProductStateI = {
   products: [],
