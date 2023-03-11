@@ -13,6 +13,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { productReducer } from './state/products/product.reducer';
 import { ProductEffects } from './state/products/product.effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { CartEffects } from './state/cart/cart.effect';
+import { cartReducer } from './state/cart/cart.reducer';
 
 @NgModule({
   declarations: [AppComponent],
@@ -22,8 +24,12 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
     SharedModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    StoreModule.forRoot({ auth: authReducer, product: productReducer }),
-    EffectsModule.forRoot([AuthEffects, ProductEffects]),
+    StoreModule.forRoot({
+      auth: authReducer,
+      product: productReducer,
+      cart: cartReducer,
+    }),
+    EffectsModule.forRoot([AuthEffects, ProductEffects, CartEffects]),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
   ],
   providers: [],

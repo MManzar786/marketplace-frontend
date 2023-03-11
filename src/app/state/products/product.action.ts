@@ -11,6 +11,7 @@ export const removeProduct = createAction(
   props<{ id: string }>()
 );
 
+// For products homepage
 export const loadProducts = createAction(
   '[Product Page] Load Products',
   props<{ skip: number; limit: number; category?: string }>()
@@ -31,6 +32,7 @@ export const loadProductsFailure = createAction(
   props<{ error: string }>()
 );
 
+// For Search
 export const seacrhProductsRequest = createAction(
   '[Product Page] Request Load Products By Search',
   props<{

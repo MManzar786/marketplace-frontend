@@ -19,6 +19,7 @@ export const initialState: ProductStateI = {
   error: null,
   status: PENDING_STATUS_LABEL,
 };
+
 const _productReducer = createReducer(
   initialState,
   on(loadProductsSuccess, (state, { products, totalProductsCount }) => {

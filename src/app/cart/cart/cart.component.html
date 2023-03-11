@@ -1,1 +1,56 @@
-<h1 class="text-3xl font-bold underline">CArt</h1>
+<div class="flex flex-col justify-between h-full">
+  <div class="p-4">
+    <h2 class="text-2xl font-bold mb-4">Cart Items</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div
+        *ngFor="let item of cartItems$ | async"
+        class="bg-white shadow p-4 rounded-lg"
+      >
+        <div class="mb-2">
+          <img
+            [src]="item.item.images[0]"
+            alt="Product Image"
+            class="w-full h-64 object-cover rounded-lg"
+          />
+        </div>
+        <div class="font-bold mb-2">{{ item.item.title }}</div>
+        <div class="text-gray-600 text-sm mb-2">
+          {{ item.item.price | currency }}
+        </div>
+        <div class="text-gray-600 text-sm mb-2">
+          {{ item.item.description }}
+        </div>
+        <div class="flex items-center text-gray-600 text-sm mb-2">
+          <div class="mr-2">Quantity:</div>
+          <button class="bg-gray-200 py-2 px-3 rounded-lg">-</button>
+          <input
+            type="number"
+            min="1"
+            class="w-12 text-center mx-2"
+            [value]="item.quantity"
+          />
+          <button class="bg-gray-200 py-2 px-3 rounded-lg">+</button>
+        </div>
+        <button
+          class="bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded-lg mt-4"
+          (click)="removeFromCart(item.item)"
+        >
+          Remove Items from Cart
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="bg-gray-100 p-4">
+    <div class="text-lg font-bold mb-2">Cart Summary</div>
+    <div class="mb-4">
+      <span class="font-bold">Total:</span>
+      <span class="ml-2">{{ 12 | currency }}</span>
+    </div>
+    <button
+      class="bg-black text-white py-2 px-4 rounded-lg block mx-auto"
+      (click)="checkout()"
+    >
+      Checkout
+    </button>
+  </div>
+</div>

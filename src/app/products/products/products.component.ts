@@ -3,6 +3,7 @@ import { Store } from '@ngrx/store';
 import { ProductI } from '../model/product.model';
 import * as productsActions from 'src/app/state/products/product.action';
 import * as productsSelector from 'src/app/state/products/product.selector';
+import * as cartSelector from 'src/app/state/cart/cart.selector';
 import { Observable } from 'rxjs';
 import {
   LIMIT_DEFAULT,
@@ -18,6 +19,10 @@ import {
   styleUrls: ['./products.component.css'],
 })
 export class ProductsComponent implements OnInit {
+  @ViewChild('searchInput', { static: true })
+  products$!: Observable<ProductI[]>;
+  searchInput!: ElementRef<HTMLInputElement>;
+
   sortOptions!: any[];
   sortOrder!: number;
   totalCount!: number;
@@ -25,9 +30,6 @@ export class ProductsComponent implements OnInit {
   pageNo: number = PAGE_NO_DEFAULT;
   pageSizeOptions: number[] = PAGE_SIZE_OPTION_DEFAULT;
   sortField!: string;
-  products$!: Observable<ProductI[]>;
-  @ViewChild('searchInput', { static: true })
-  searchInput!: ElementRef<HTMLInputElement>;
   categories: categoryI[] = [
     { id: 1, name: 'smartphones' },
     { id: 2, name: 'laptops' },
@@ -40,7 +42,7 @@ export class ProductsComponent implements OnInit {
   ];
   selectedCategory: string = '';
   constructor(private store: Store) {}
-
+  cartItems: any;
   ngOnInit(): void {
     this.store.dispatch(
       productsActions.loadProducts({ skip: SKIP_DEFAULT, limit: LIMIT_DEFAULT })
@@ -51,6 +53,8 @@ export class ProductsComponent implements OnInit {
       .subscribe((count: number) => {
         this.totalCount = count;
       });
+
+    this.cartItems = this.store.select(cartSelector.selectCartItems);
   }
 
   onPageChange($event: any) {
