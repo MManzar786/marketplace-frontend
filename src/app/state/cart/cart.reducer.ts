@@ -23,6 +23,23 @@ export const initialState: CartStateI = {
 
 const _cartReducer = createReducer(
   initialState,
+  on(loadCartFailure, (state, { error }) => {
+    return {
+      ...state,
+      error: error,
+      status: ERROR_STATUS_LABEL,
+    };
+  }),
+
+  on(loadCartSuccess, (state, { items }) => {
+    return {
+      ...state,
+      cartItems: items,
+      cartItemsCount: state.cartItems.length,
+      error: null,
+      status: ERROR_STATUS_LABEL,
+    };
+  }),
 
   on(addItemToCartSuccess, (state, { item }) => {
     const existingCartItem = state.cartItems.find(
@@ -84,31 +101,15 @@ const _cartReducer = createReducer(
     };
   }),
 
-  on(removeItemFromCart, (state, { id }) => {
+  on(removeItemFromCart, (state, { cartItem }) => {
     return {
       ...state,
-      cartItems: state.cartItems.filter((item) => item.item.id !== id),
-      cartItemsCount: state.cartItemsCount--,
+      cartItems: state.cartItems.filter(
+        (item) => item.item.id !== cartItem.item.id
+      ),
+      cartItemsCount: state.cartItemsCount - cartItem.quantity,
       error: null,
       status: SUCCESS_STATUS_LABEL,
-    };
-  }),
-
-  on(loadCartFailure, (state, { error }) => {
-    return {
-      ...state,
-      error: error,
-      status: ERROR_STATUS_LABEL,
-    };
-  }),
-
-  on(loadCartSuccess, (state, { items }) => {
-    return {
-      ...state,
-      cartItems: items,
-      cartItemsCount: state.cartItems.length,
-      error: null,
-      status: ERROR_STATUS_LABEL,
     };
   })
 );

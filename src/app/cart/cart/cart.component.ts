@@ -22,10 +22,6 @@ export class CartComponent implements OnInit {
     // this.store.dispatch(cartActions.loadCartRequest({ userId: 5 }));
     this.cartItems$ = this.store.select(cartSelector.selectCartItems);
   }
-  removeFromCart(_t7: ProductI) {}
-  checkout() {
-    throw new Error('Method not implemented.');
-  }
 
   updateCartItem(operator: string, item: CartItemI) {
     switch (operator) {
@@ -52,5 +48,12 @@ export class CartComponent implements OnInit {
           })
         );
     }
+  }
+
+  removeFromCart(cartItem: CartItemI) {
+    this.store.dispatch(cartActions.removeItemFromCart({ cartItem }));
+  }
+  checkout() {
+    throw new Error('Method not implemented.');
   }
 }

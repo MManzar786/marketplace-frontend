@@ -22,19 +22,9 @@ export const updateCartItem = createAction(
   props<{ item: CartItemI; quantityOperator: string }>()
 );
 
-// export const updateCartItemSuccess = createAction(
-//   '[Cart Page] Sucess Add item to cart',
-//   props<{ item: CartItemI }>()
-// );
-
-// export const updateCartItemFailure = createAction(
-//   '[Cart Page] Failure Add item to cart',
-//   props<{ error: string }>()
-// );
-
 export const removeItemFromCart = createAction(
   '[Cart Page] Remove item from cart',
-  props<{ id: number }>()
+  props<{ cartItem: CartItemI }>()
 );
 
 export const loadCartRequest = createAction(

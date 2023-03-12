@@ -45,7 +45,7 @@
         </div>
         <button
           class="bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded-lg mt-4"
-          (click)="removeFromCart(item.item)"
+          (click)="removeFromCart(item)"
         >
           Remove Items from Cart
         </button>
@@ -53,14 +53,10 @@
     </div>
   </div>
   <div class="bg-gray-100 p-4">
-    <div class="text-lg font-bold mb-2">Cart Summary</div>
-    <div class="mb-4">
-      <span class="font-bold">Total:</span>
-      <span class="ml-2">{{ 12 | currency }}</span>
-    </div>
     <button
       class="bg-black text-white py-2 px-4 rounded-lg block mx-auto"
       (click)="checkout()"
+      routerLink="/checkout"
     >
       Checkout
     </button>
