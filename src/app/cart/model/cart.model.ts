@@ -1,4 +1,4 @@
-import { ProductI } from 'src/app/products/model/product.model';
+import { ProductI } from 'src/app/products/models/product.model';
 
 export interface CartStateI {
   cartItems: CartItemI[];

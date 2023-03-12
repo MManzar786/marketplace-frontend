@@ -1,5 +1,5 @@
 import { createReducer, on } from '@ngrx/store';
-import { ProductStateI } from 'src/app/products/model/product.model';
+import { ProductStateI } from 'src/app/products/models/product.model';
 import {
   ERROR_STATUS_LABEL,
   LOADING_STATUS_LABEL,
@@ -59,6 +59,6 @@ const _productReducer = createReducer(
   })
 );
 
-export function productReducer(state: any, action: any) {
+export function ProductReducer(state: any, action: any) {
   return _productReducer(state, action);
 }

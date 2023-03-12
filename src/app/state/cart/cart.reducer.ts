@@ -114,6 +114,6 @@ const _cartReducer = createReducer(
   })
 );
 
-export function cartReducer(state: any, action: any) {
+export function CartReducer(state: any, action: any) {
   return _cartReducer(state, action);
 }

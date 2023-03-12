@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { ProductI } from '../model/product.model';
+import { ProductI } from '../../models/product.model';
 import * as cartActions from 'src/app/state/cart/cart.action';
 import { CartItemI } from 'src/app/cart/model/cart.model';
 

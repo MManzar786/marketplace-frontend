@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { ProductI } from 'src/app/products/model/product.model';
+import { ProductI } from 'src/app/products/models/product.model';
 import * as cartActions from 'src/app/state/cart/cart.action';
 import * as cartSelector from 'src/app/state/cart/cart.selector';
 import {
   DECREMENT_OPERATOR,
   INCREMENT_OPERATOR,
 } from 'src/app/utils/constants';
-import { CartItemI } from '../model/cart.model';
+import { CartItemI } from '../../model/cart.model';
 
 @Component({
   selector: 'app-cart',

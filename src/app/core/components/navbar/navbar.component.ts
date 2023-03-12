@@ -7,7 +7,7 @@ import * as authActions from '../../../state/auth/auth.actions';
 import * as cartActions from '../../../state/cart/cart.action';
 import * as cartSelector from '../../../state/cart/cart.selector';
 import { Observable } from 'rxjs';
-import { ProductI } from 'src/app/products/model/product.model';
+import { ProductI } from 'src/app/products/models/product.model';
 
 @Component({
   selector: 'app-navbar',

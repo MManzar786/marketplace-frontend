@@ -1,6 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { ProductI } from '../model/product.model';
+import { ProductI } from '../../models/product.model';
 import * as productsActions from 'src/app/state/products/product.action';
 import * as productsSelector from 'src/app/state/products/product.selector';
 import * as cartSelector from 'src/app/state/cart/cart.selector';

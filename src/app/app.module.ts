@@ -9,11 +9,11 @@ import { authReducer } from './state/auth/auth.reducer';
 import { EffectsModule } from '@ngrx/effects';
 import { AuthEffects } from './state/auth/auth.effects';
 import { HttpClientModule } from '@angular/common/http';
-import { productReducer } from './state/products/product.reducer';
+import { ProductReducer } from './state/products/product.reducer';
 import { ProductEffects } from './state/products/product.effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { CartEffects } from './state/cart/cart.effect';
-import { cartReducer } from './state/cart/cart.reducer';
+import { CartReducer } from './state/cart/cart.reducer';
 import { CoreModule } from './core/core.module';
 
 @NgModule({
@@ -26,8 +26,8 @@ import { CoreModule } from './core/core.module';
     BrowserAnimationsModule,
     StoreModule.forRoot({
       auth: authReducer,
-      product: productReducer,
-      cart: cartReducer,
+      product: ProductReducer,
+      cart: CartReducer,
     }),
     EffectsModule.forRoot([AuthEffects, ProductEffects, CartEffects]),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),

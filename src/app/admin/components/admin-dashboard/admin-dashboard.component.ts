@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { categoryI } from 'src/app/products/products/products.component';
+import { categoryI } from 'src/app/products/components/products/products.component';
 
 @Component({
   selector: 'app-admin-dashboard',
