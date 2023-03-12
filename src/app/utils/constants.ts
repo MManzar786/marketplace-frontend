@@ -18,3 +18,8 @@ export const SUCCESS_STATUS_CODE = 200;
 
 export const INCREMENT_OPERATOR = '+';
 export const DECREMENT_OPERATOR = '-';
+
+// TODOS
+// images[0] must be change after backend development
+// Cartitems laoding apis must be included
+//
