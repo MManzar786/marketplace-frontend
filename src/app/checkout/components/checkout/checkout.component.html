@@ -9,20 +9,25 @@
           alt="Product Image"
         />
         <div class="p-4">
+          <span>Title</span>
           <h2 class="text-lg font-bold mb-2">{{ item.item.title }}</h2>
+          <span>Description</span>
           <p class="text-gray-700 text-base mb-2">
             {{ item.item.description }}
           </p>
-          <p class="text-gray-700 text-base mb-2">{{ item.item.price }}</p>
+          <span>Price</span>
+          <p class="text-gray-700 text-base mb-2">
+            {{ item.item.price | currency }}
+          </p>
           {{ getTotalPrice(item) }}
           <div class="flex items-center justify-between">
             <label class="text-gray-700 text-base mb-2">Quantity:</label>
-            <input
+            <p
               class="w-16 py-1 px-2 border border-gray-400 rounded-lg"
-              type="number"
-              [value]="item.quantity"
               readonly
-            />
+            >
+              {{ item.quantity }}
+            </p>
           </div>
         </div>
       </div>

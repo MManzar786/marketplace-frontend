@@ -19,10 +19,8 @@ import {
   styleUrls: ['./products.component.css'],
 })
 export class ProductsComponent implements OnInit {
-  @ViewChild('searchInput', { static: true })
+  @ViewChild('searchInput') searchInput!: ElementRef;
   products$!: Observable<ProductI[]>;
-  searchInput!: ElementRef<HTMLInputElement>;
-
   sortOptions!: any[];
   sortOrder!: number;
   totalCount!: number;
