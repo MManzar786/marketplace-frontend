@@ -1,0 +1,117 @@
+<div class="mx-auto px-4 py-4 sm:px-8 lg:container">
+  <div class="mb-4 flex justify-between">
+    <div class="inline-block">
+      <h3 class="font-semibold text-gray-900 dark:text-white">
+        Admin Dashboard
+      </h3>
+      <div
+        class="space-x-1 text-xs font-medium text-gray-400 dark:text-night-300"
+      >
+        <span>Add a Product</span>
+      </div>
+    </div>
+  </div>
+  <div class="p-card container w-full flex justify-center mx -auto">
+    <div class="container w-7/12">
+      <form [formGroup]="productForm">
+        <label for="Title" class="block mb-1 text-sm sm:text-base font-medium"
+          >Product Title</label
+        >
+        <input
+          formControlName="title"
+          type="text"
+          class="py-4 bg-gray-50 border border-grey text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+          placeholder="Enter Title Here"
+          (blur)="validateInput('title')"
+        />
+        <small *ngIf="fc['title'].errors" id="title" class="p-invalid">{{
+          fc["title"]["errors"]["error"]
+        }}</small>
+        <br />
+        <label
+          for="description"
+          class="block mb-1 text-sm sm:text-base font-medium"
+          >Product Description</label
+        >
+        <textarea
+          formControlName="description"
+          type="text"
+          class="py-4 bg-gray-50 border border-grey text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+          placeholder="Enter Description Here"
+        ></textarea>
+
+        <br />
+        <label for="Title" class="block mb-1 text-sm sm:text-base font-medium"
+          >Product Price</label
+        >
+        <input
+          formControlName="price"
+          type="number"
+          class="py-4 bg-gray-50 border border-grey text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+          placeholder="Enter Price Here"
+          (blur)="validateInput('price')"
+        />
+        <small *ngIf="fc['price'].errors" id="price" class="p-invalid">{{
+          fc["price"]["errors"]["error"]
+        }}</small>
+        <br />
+
+        <label for="Title" class="block mb-1 text-sm sm:text-base font-medium"
+          >Select Category</label
+        >
+        <p-dropdown
+          formControlName="category"
+          [options]="categories"
+          optionLabel="name"
+          placeholder="Select a Category"
+          class="p-dropdown w-full py-4 bg-gray-50 border border-grey text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5"
+          (onBlur)="validateInput('category')"
+        ></p-dropdown>
+        <small *ngIf="fc['category'].errors" id="category" class="p-invalid">{{
+          fc["category"]["errors"]["error"]
+        }}</small>
+        <br />
+
+        <div class="flex justify-center items-center w-full py-3">
+          <label
+            for="dropzone-file"
+            class="flex flex-col justify-center items-center w-full h-64 bg-gray-50 rounded-lg border-2 border-gray-300 border-dashed cursor-pointer dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-white dark:hover:border-gray-500 dark:hover:bg-gray-600"
+          >
+            <div class="flex flex-col justify-center items-center pt-5 pb-6">
+              <img
+                *ngIf="imageUrl"
+                class="mb-3 w-32 h-32 text-gray-400"
+                [src]="imageUrl"
+                alt=""
+              />
+              <p class="mb-2 text-sm text-gray-500 dark:text-gray-400">
+                <span class="font-semibold">Click to upload</span> or drag and
+                drop
+              </p>
+              <p class="text-xs text-gray-500 dark:text-gray-400">
+                PNG, JPG (MAX. 800x400px)
+              </p>
+            </div>
+            <input
+              id="dropzone-file"
+              (change)="getImage($event)"
+              type="file"
+              accept="image/png, image/jpeg"
+              class="hidden"
+            />
+          </label>
+        </div>
+        <div *ngIf="submitted && !file">
+          <span class="p-invalid">Please upload an Image</span>
+        </div>
+      </form>
+    </div>
+  </div>
+  <button
+    [disabled]="!productForm.valid"
+    (click)="onSubmit()"
+    class="bg-gray-500 flex-none rounded-md bg-primary-500 md:px-14 font-semibold md:py-3 sm:px-8 sm:py-2 px-6 py-1.5 rounded-3xl"
+  >
+    Submit
+  </button>
+</div>
