@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, of, exhaustMap, map, tap, switchMap } from 'rxjs';
-import { AuthService } from 'src/app/auth/services/auth.service';
-import { ProductService } from 'src/app/products/services/product.service';
+import { AuthService } from 'src/app/core/services/auth.service';
+import { ProductService } from 'src/app/core/services/product.service';
 import * as ProductActions from 'src/app/state/products/product.action';
 
 @Injectable()
