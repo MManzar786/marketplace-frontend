@@ -9,6 +9,11 @@ import * as cartSelector from '../../../state/cart/cart.selector';
 import { Observable } from 'rxjs';
 import { ProductI } from 'src/app/products/models/product.model';
 import { Router } from '@angular/router';
+import {
+  ROLE_LABEL,
+  TOKEN_LABEL,
+  USER_ID_LABEL,
+} from 'src/app/utils/constants';
 
 @Component({
   selector: 'app-navbar',
@@ -19,6 +24,8 @@ export class NavbarComponent implements OnInit {
   items: MenuItem[] = [];
   token$ = this.store.select(fromAuthSelector.selectToken);
   role$ = this.store.select(fromAuthSelector.selectRole);
+  loginState$ = this.store.select(fromAuthSelector.selectState);
+  tokenExist: boolean = false;
   cartItemsCount$!: Observable<any>;
   cartItems$!: Observable<ProductI>;
   constructor(
@@ -26,11 +33,23 @@ export class NavbarComponent implements OnInit {
     private router: Router
   ) {}
   ngOnInit(): void {
-    this.cartItems$ = this.store.select(cartSelector.selectCartItems);
+    let userId: string | null = localStorage.getItem(USER_ID_LABEL);
+    if (userId) {
+      this.store.dispatch(
+        cartActions.loadCartRequest({ userId: parseInt(userId) })
+      );
+    }
     this.cartItemsCount$ = this.store.select(cartSelector.selectCartItemsCount);
+    this.cartItems$ = this.store.select(cartSelector.selectCartItems);
+    let token: string | null = localStorage.getItem(TOKEN_LABEL);
+    let role: string | null = localStorage.getItem(ROLE_LABEL);
+    if (token && role) {
+      let res: any = { token, role };
+    }
   }
   onLogoutClick() {
     localStorage.clear();
+    this.store.dispatch(authActions.logout());
     this.router.navigate(['/auth/sign-in']);
   }
 }

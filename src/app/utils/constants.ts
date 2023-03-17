@@ -21,3 +21,4 @@ export const DECREMENT_OPERATOR = '-';
 
 export const TOKEN_LABEL = 'token';
 export const ROLE_LABEL = 'role';
+export const USER_ID_LABEL = 'user_id';

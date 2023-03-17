@@ -7,6 +7,7 @@ import * as cartSelector from 'src/app/state/cart/cart.selector';
 import {
   DECREMENT_OPERATOR,
   INCREMENT_OPERATOR,
+  USER_ID_LABEL,
 } from 'src/app/utils/constants';
 import { CartItemI } from '../../model/cart.model';
 
@@ -17,9 +18,10 @@ import { CartItemI } from '../../model/cart.model';
 })
 export class CartComponent implements OnInit {
   cartItems$!: Observable<CartItemI[]>;
+  cartItemsCount$!: Observable<number>;
   constructor(private store: Store) {}
   ngOnInit() {
-    // this.store.dispatch(cartActions.loadCartRequest({ userId: 5 }));
+    this.cartItemsCount$ = this.store.select(cartSelector.selectCartItemsCount);
     this.cartItems$ = this.store.select(cartSelector.selectCartItems);
   }
 
@@ -28,7 +30,7 @@ export class CartComponent implements OnInit {
       case INCREMENT_OPERATOR:
         {
           let quantity = item.quantity + 1;
-          let cartItem = { item: item.item, quantity: quantity };
+          let cartItem = { product: item.product, quantity: quantity };
           this.store.dispatch(
             cartActions.updateCartItem({
               item: cartItem,
@@ -40,7 +42,7 @@ export class CartComponent implements OnInit {
 
       default:
         let quantity = item.quantity - 1;
-        let cartItem = { item: item.item, quantity: quantity };
+        let cartItem = { product: item.product, quantity: quantity };
         this.store.dispatch(
           cartActions.updateCartItem({
             item: cartItem,

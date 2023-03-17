@@ -32,10 +32,14 @@ const _cartReducer = createReducer(
   }),
 
   on(loadCartSuccess, (state, { items }) => {
+    const totalQuantity = items.reduce(
+      (total, item) => total + item.quantity,
+      0
+    );
     return {
       ...state,
       cartItems: items,
-      cartItemsCount: state.cartItems.length,
+      cartItemsCount: totalQuantity,
       error: null,
       status: ERROR_STATUS_LABEL,
     };
@@ -43,11 +47,11 @@ const _cartReducer = createReducer(
 
   on(addItemToCartSuccess, (state, { item }) => {
     const existingCartItem = state.cartItems.find(
-      (cartItem) => cartItem.item.id === item.item.id
+      (cartItem) => cartItem.product.id === item.product.id
     );
     if (existingCartItem) {
       const updatedCartItems = state.cartItems.map((cartItem) => {
-        if (cartItem.item.id === item.item.id) {
+        if (cartItem.product.id === item.product.id) {
           return {
             ...cartItem,
             quantity: cartItem.quantity + 1,
@@ -76,10 +80,10 @@ const _cartReducer = createReducer(
 
   on(updateCartItem, (state, { item, quantityOperator }) => {
     const updatedCartItems = state.cartItems.map((cartItem) => {
-      if (cartItem.item.id === item.item.id) {
+      if (cartItem.product.id === item.product.id) {
         return {
           ...cartItem,
-          item: item.item,
+          item: item.product,
           quantity: item.quantity,
           error: null,
           status: SUCCESS_STATUS_LABEL,
@@ -105,7 +109,7 @@ const _cartReducer = createReducer(
     return {
       ...state,
       cartItems: state.cartItems.filter(
-        (item) => item.item.id !== cartItem.item.id
+        (item) => item.product.id !== cartItem.product.id
       ),
       cartItemsCount: state.cartItemsCount - cartItem.quantity,
       error: null,

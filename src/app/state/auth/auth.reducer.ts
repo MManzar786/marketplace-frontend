@@ -7,11 +7,13 @@ export interface State {
   token: string | null;
   role: string | null;
   loginError?: string;
+  loginState: boolean;
 }
 
 export const initialState: State = {
   token: null,
   role: null,
+  loginState: false,
 };
 
 const _authReducer = createReducer(
@@ -21,6 +23,7 @@ const _authReducer = createReducer(
       ...state,
       token: loginSuccessResponse.token,
       role: loginSuccessResponse.role,
+      loginState: true,
     };
   }),
   on(loginFailure, (state, { error }) => {
@@ -29,6 +32,7 @@ const _authReducer = createReducer(
       loginError: error,
       token: null,
       user: null,
+      loginState: false,
     };
   }),
   on(logout, (state) => {
@@ -36,6 +40,7 @@ const _authReducer = createReducer(
       ...state,
       token: null,
       user: null,
+      loginState: false,
     };
   })
 );

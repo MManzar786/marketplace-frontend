@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { CategoryService } from 'src/app/core/services/category.service';
 import { ProductService } from 'src/app/core/services/product.service';
 import { categoryI } from 'src/app/products/components/products/products.component';
 
@@ -13,20 +14,21 @@ export class AdminDashboardComponent implements OnInit {
   imageUrl!: string;
   productForm!: FormGroup;
   submitted: boolean = false;
-  categories: categoryI[] = [
-    { id: 1, name: 'smartphones' },
-    { id: 2, name: 'laptops' },
-    { id: 3, name: 'fragrances' },
-    { id: 4, name: 'skincare' },
-    { id: 5, name: 'groceries' },
-    { id: 6, name: 'furniture' },
-    { id: 7, name: 'motorcycle' },
-    { id: 8, name: 'tops' },
-  ];
-  constructor(private productService: ProductService) {}
+  categories: categoryI[] = [];
+  constructor(
+    private productService: ProductService,
+    private categoryService: CategoryService
+  ) {}
 
   ngOnInit(): void {
+    this.getCategories();
     this.initForm();
+  }
+
+  getCategories() {
+    this.categoryService.getAllCategories().subscribe((categories: any) => {
+      this.categories = categories['categories'];
+    });
   }
 
   initForm(): void {

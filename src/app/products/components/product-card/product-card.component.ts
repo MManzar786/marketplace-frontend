@@ -19,7 +19,7 @@ export class ProductCardComponent {
     let token = localStorage.getItem('token');
     if (token) {
       let cartItem: CartItemI = {
-        item: this.product,
+        product: this.product,
         quantity: 1,
       };
       this.store.dispatch(

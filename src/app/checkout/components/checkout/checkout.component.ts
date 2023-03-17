@@ -17,6 +17,6 @@ export class CheckoutComponent implements OnInit {
     this.cartItems$ = this.store.select(cartSelector.selectCartItems);
   }
   getTotalPrice(item: CartItemI): void {
-    this.totalPrice += item.quantity * item.item.price;
+    this.totalPrice += item.quantity * item.product.price;
   }
 }
