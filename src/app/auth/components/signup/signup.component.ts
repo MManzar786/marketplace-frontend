@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AuthService } from 'src/app/core/services/auth.service';
 import { passwordMatchValidator } from 'src/app/shared/validators/password-match.validator';
 
 @Component({
@@ -9,6 +10,7 @@ import { passwordMatchValidator } from 'src/app/shared/validators/password-match
 })
 export class SignupComponent implements OnInit {
   signUpForm!: FormGroup;
+  constructor(private authService: AuthService) {}
   ngOnInit(): void {
     this.initForm();
   }
@@ -31,6 +33,21 @@ export class SignupComponent implements OnInit {
 
   onSubmit() {
     if (this.signUpForm.valid) {
+      this.authService
+        .signup(
+          this.signUpForm.controls['firstName'].value,
+          this.signUpForm.controls['lastName'].value,
+          this.signUpForm.controls['email'].value,
+          this.signUpForm.controls['password'].value
+        )
+        .subscribe((res: any) => {
+          if (res.success) {
+            alert('Register Successfull');
+          }
+          (err: any) => {
+            console.log(err);
+          };
+        });
     }
   }
 

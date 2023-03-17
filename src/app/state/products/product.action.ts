@@ -14,12 +14,12 @@ export const removeProduct = createAction(
 // For products homepage
 export const loadProducts = createAction(
   '[Product Page] Load Products',
-  props<{ skip: number; limit: number; category?: string }>()
+  props<{ pageNo: number; limit: number; category?: number }>()
 );
 
 export const loadProductsByCategory = createAction(
   '[Product Page] Load Products By Category',
-  props<{ skip: number; limit: number; category: string }>()
+  props<{ pageNo: number; limit: number; category: number }>()
 );
 
 export const loadProductsSuccess = createAction(
@@ -39,7 +39,6 @@ export const seacrhProductsRequest = createAction(
     skip: number;
     limit: number;
     searchString: string;
-    selectedCategory?: string;
   }>()
 );
 

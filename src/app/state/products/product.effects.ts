@@ -14,18 +14,34 @@ export class ProductEffects {
   ) {}
   loadProduct$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(
-        ProductActions.loadProducts,
-        ProductActions.loadProductsByCategory
-      ),
+      ofType(ProductActions.loadProducts),
+      switchMap((action) =>
+        this.productService.getAllProducts(action.pageNo, action.limit).pipe(
+          map((successResponse: any) =>
+            ProductActions.loadProductsSuccess({
+              products: successResponse.data,
+              totalProductsCount: successResponse.totalElements,
+            })
+          ),
+          catchError((error) =>
+            of(ProductActions.loadProductsFailure({ error }))
+          )
+        )
+      )
+    )
+  );
+
+  loadProductByCategory$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(ProductActions.loadProductsByCategory),
       switchMap((action) =>
         this.productService
-          .getAllProducts(action.skip, action.limit, action?.category)
+          .getProductsByCategory(action.pageNo, action.limit, action.category)
           .pipe(
             map((successResponse: any) =>
               ProductActions.loadProductsSuccess({
-                products: successResponse.products,
-                totalProductsCount: successResponse.total,
+                products: successResponse.data,
+                totalProductsCount: successResponse.totalElements,
               })
             ),
             catchError((error) =>
@@ -41,17 +57,12 @@ export class ProductEffects {
       ofType(ProductActions.seacrhProductsRequest),
       switchMap((action) =>
         this.productService
-          .seacrhProducts(
-            action.skip,
-            action.limit,
-            action?.searchString,
-            action?.selectedCategory
-          )
+          .seacrhProducts(action.skip, action.limit, action?.searchString)
           .pipe(
             map((successResponse: any) =>
               ProductActions.seacrhProducts({
-                products: successResponse.products,
-                totalProductsCount: successResponse.total,
+                products: successResponse.data,
+                totalProductsCount: successResponse.totalElements,
               })
             ),
             catchError((error) =>

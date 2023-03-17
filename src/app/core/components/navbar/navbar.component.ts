@@ -17,7 +17,7 @@ import { ProductI } from 'src/app/products/models/product.model';
 export class NavbarComponent implements OnInit {
   items: MenuItem[] = [];
   token$ = this.store.select(fromAuthSelector.selectToken);
-  user$ = this.store.select(fromAuthSelector.selectUser);
+  role$ = this.store.select(fromAuthSelector.selectRole);
   cartItemsCount$!: Observable<any>;
   cartItems$!: Observable<ProductI>;
   constructor(private store: Store<fromAuthReducer.State>) {}

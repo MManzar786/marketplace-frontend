@@ -5,12 +5,12 @@
       <div class="bg-white rounded-lg shadow-md overflow-hidden">
         <img
           class="w-full h-64 object-cover"
-          [src]="item.item.images[0]"
+          [src]="item.item.name"
           alt="Product Image"
         />
         <div class="p-4">
           <span>Title</span>
-          <h2 class="text-lg font-bold mb-2">{{ item.item.title }}</h2>
+          <h2 class="text-lg font-bold mb-2">{{ item.item.name }}</h2>
           <span>Description</span>
           <p class="text-gray-700 text-base mb-2">
             {{ item.item.description }}

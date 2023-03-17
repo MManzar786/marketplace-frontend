@@ -20,7 +20,7 @@ export class SigninComponent implements OnInit {
       email: new FormControl('', [Validators.required, Validators.email]),
       password: new FormControl('', [
         Validators.required,
-        Validators.minLength(8),
+        Validators.minLength(5),
       ]),
     });
   }
@@ -55,7 +55,7 @@ export class SigninComponent implements OnInit {
         error: `${
           inputField.split('')[0].toUpperCase() +
           inputField.split('').slice(1).join('')
-        } must have min 8 Characters `,
+        } must have min 5 Characters `,
       });
     }
   }

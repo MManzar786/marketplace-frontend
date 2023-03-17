@@ -5,13 +5,13 @@ import { loginFailure, loginSuccess, logout } from './auth.actions';
 // 'any' must be change to interface
 export interface State {
   token: string | null;
-  user: any | { data: {}; success: boolean; code: number };
+  role: string | null;
   loginError?: string;
 }
 
 export const initialState: State = {
   token: null,
-  user: null,
+  role: null,
 };
 
 const _authReducer = createReducer(
@@ -19,8 +19,8 @@ const _authReducer = createReducer(
   on(loginSuccess, (state, { loginSuccessResponse }) => {
     return {
       ...state,
-      token: loginSuccessResponse.data.accessToken,
-      user: loginSuccessResponse.data,
+      token: loginSuccessResponse.token,
+      role: loginSuccessResponse.role,
     };
   }),
   on(loginFailure, (state, { error }) => {

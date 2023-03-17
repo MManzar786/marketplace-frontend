@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ProductService } from 'src/app/core/services/product.service';
 import { categoryI } from 'src/app/products/components/products/products.component';
 
 @Component({
@@ -22,7 +23,7 @@ export class AdminDashboardComponent implements OnInit {
     { id: 7, name: 'motorcycle' },
     { id: 8, name: 'tops' },
   ];
-  constructor() {}
+  constructor(private productService: ProductService) {}
 
   ngOnInit(): void {
     this.initForm();
@@ -73,6 +74,9 @@ export class AdminDashboardComponent implements OnInit {
       formData.append('category', this.fc['category'].value);
       formData.append('price', this.fc['price'].value);
       formData.append('image', this.file);
+      this.productService.addProducts(formData).subscribe((res) => {
+        console.log(res);
+      });
     }
   }
 

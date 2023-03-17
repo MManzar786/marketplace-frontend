@@ -12,6 +12,7 @@ import {
   PAGE_SIZE_OPTION_DEFAULT,
   SKIP_DEFAULT,
 } from 'src/app/utils/constants';
+import { CategoryService } from 'src/app/core/services/category.service';
 
 @Component({
   selector: 'app-products',
@@ -28,22 +29,19 @@ export class ProductsComponent implements OnInit {
   pageNo: number = PAGE_NO_DEFAULT;
   pageSizeOptions: number[] = PAGE_SIZE_OPTION_DEFAULT;
   sortField!: string;
-  categories: categoryI[] = [
-    { id: 1, name: 'smartphones' },
-    { id: 2, name: 'laptops' },
-    { id: 3, name: 'fragrances' },
-    { id: 4, name: 'skincare' },
-    { id: 5, name: 'groceries' },
-    { id: 6, name: 'furniture' },
-    { id: 7, name: 'motorcycle' },
-    { id: 8, name: 'tops' },
-  ];
-  selectedCategory: string = '';
-  constructor(private store: Store) {}
+  categories: categoryI[] = [];
+  selectedCategory: number = 0;
+  searchValue: string = '';
+
+  constructor(private store: Store, private categoryService: CategoryService) {}
   cartItems: any;
   ngOnInit(): void {
+    this.getCategories();
     this.store.dispatch(
-      productsActions.loadProducts({ skip: SKIP_DEFAULT, limit: LIMIT_DEFAULT })
+      productsActions.loadProducts({
+        pageNo: PAGE_NO_DEFAULT,
+        limit: LIMIT_DEFAULT,
+      })
     );
     this.products$ = this.store.select(productsSelector.selectProducts);
     this.store
@@ -55,38 +53,55 @@ export class ProductsComponent implements OnInit {
     this.cartItems = this.store.select(cartSelector.selectCartItems);
   }
 
+  getCategories() {
+    this.categoryService.getAllCategories().subscribe((categories: any) => {
+      this.categories = categories['categories'];
+    });
+  }
   onPageChange($event: any) {
-    let pageNo = $event.page;
-    this.pageSize = $event.rows;
-    this.store.dispatch(
-      productsActions.loadProducts({
-        skip: pageNo * this.pageSize,
-        limit: this.pageSize,
-      })
-    );
+    if (this.searchValue !== '') {
+      let pageNo = $event.page;
+      this.pageSize = $event.rows;
+      this.store.dispatch(
+        productsActions.seacrhProductsRequest({
+          skip: pageNo,
+          limit: this.pageSize,
+          searchString: this.searchValue,
+        })
+      );
+    } else {
+      let pageNo = $event.page;
+      this.pageSize = $event.rows;
+      this.store.dispatch(
+        productsActions.loadProducts({
+          pageNo: pageNo,
+          limit: this.pageSize,
+        })
+      );
+    }
   }
 
   onChangeCategory(value: categoryI) {
-    this.selectedCategory = value.name;
+    this.selectedCategory = value.id;
     this.store.dispatch(
-      productsActions.loadProducts({
-        skip: 0,
+      productsActions.loadProductsByCategory({
+        pageNo: 0,
         limit: this.pageSize,
         category: this.selectedCategory,
       })
     );
+    this.searchValue = '';
   }
-
   onSearchClick() {
-    const searchValue = this.searchInput.nativeElement.value;
+    this.searchValue = this.searchInput.nativeElement.value;
     this.store.dispatch(
       productsActions.seacrhProductsRequest({
         skip: 0,
         limit: LIMIT_DEFAULT,
-        searchString: searchValue,
-        selectedCategory: this.selectedCategory,
+        searchString: this.searchValue,
       })
     );
+    this.pageNo = PAGE_NO_DEFAULT;
   }
 }
 export interface categoryI {

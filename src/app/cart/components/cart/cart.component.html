@@ -8,12 +8,12 @@
       >
         <div class="mb-2">
           <img
-            [src]="item.item.images[0]"
+            [src]="item.item.imageUrl"
             alt="Product Image"
             class="w-full h-64 object-cover rounded-lg"
           />
         </div>
-        <div class="font-bold mb-2">{{ item.item.title }}</div>
+        <div class="font-bold mb-2">{{ item.item.name }}</div>
         <div class="text-gray-600 text-sm mb-2">
           {{ item.item.price | currency }}
         </div>

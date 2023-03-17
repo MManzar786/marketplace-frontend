@@ -8,9 +8,23 @@ import { environment } from 'src/environments/environment';
 export class AuthService {
   constructor(private http: HttpClient) {}
   signin(email: string, password: string) {
-    return this.http.post(`${environment.backendUrl}api/user/login`, {
+    return this.http.post(`${environment.backendUrl}auth/login`, {
       email,
       password,
+    });
+  }
+
+  signup(
+    firstnamae: string,
+    lastname: string,
+    email: string,
+    password: string
+  ) {
+    return this.http.post(`${environment.backendUrl}auth/register`, {
+      firstname: firstnamae,
+      lastname: lastname,
+      email: email,
+      password: password,
     });
   }
 }

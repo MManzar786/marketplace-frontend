@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -7,30 +8,25 @@ import { Injectable } from '@angular/core';
 export class ProductService {
   constructor(private http: HttpClient) {}
 
-  getAllProducts(skip: number, limit: number, category?: string) {
-    let url = `https://dummyjson.com/products?limit=${limit}&skip=${skip}`;
-    if (category) {
-      url = `https://dummyjson.com/products/category/${category}?limit=${limit}&skip=${skip}`;
-    }
-    return this.http.get(url);
-  }
-
-  getProductsByCategory(skip: number, limit: number, category: string) {
+  getAllProducts(pageNo: number, limit: number) {
     return this.http.get(
-      `https://dummyjson.com/products/category/${category}?limit=${limit}&skip=${skip}`
+      `${environment.backendUrl}products?page=${pageNo}&size=${limit}`
     );
   }
 
-  // TODO
-  // add in Api selectedCategory option
-  seacrhProducts(
-    skip: number,
-    limit: number,
-    searchStr: string,
-    selectedCategory?: string
-  ) {
+  getProductsByCategory(pageNo: number, limit: number, category: number) {
     return this.http.get(
-      `https://dummyjson.com/products/search?q=${searchStr}&limit=${limit}&skip=${skip}`
+      `${environment.backendUrl}products/category?category=${category}&page=${pageNo}&size=${limit}`
     );
+  }
+
+  seacrhProducts(pageNo: number, limit: number, searchStr: string) {
+    return this.http.get(
+      `${environment.backendUrl}products?title=${searchStr}&page=${pageNo}&size=${limit}`
+    );
+  }
+
+  addProducts(formData: FormData) {
+    return this.http.post(`${environment.backendUrl}products/add`, formData);
   }
 }
