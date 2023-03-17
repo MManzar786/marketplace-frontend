@@ -1,64 +1,103 @@
 <div class="flex flex-col justify-between h-full">
   <div class="p-4">
     <h2 class="text-2xl font-bold mb-4">Cart Items</h2>
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-      <div
-        *ngFor="let item of cartItems$ | async"
-        class="bg-white shadow p-4 rounded-lg"
-      >
-        <div class="mb-2">
-          <img
-            [src]="item.product.imageUrl"
-            alt="Product Image"
-            class="w-full h-64 object-cover rounded-lg"
-          />
-        </div>
-        <div class="font-bold mb-2">{{ item.product.name }}</div>
-        <div class="text-gray-600 text-sm mb-2">
-          {{ item.product.price | currency }}
-        </div>
-        <div class="text-gray-600 text-sm mb-2">
-          {{ item.product.description }}
-        </div>
-        <div class="flex items-center text-gray-600 text-sm mb-2">
-          <div class="mr-2">Quantity:</div>
-          <button
-            class="bg-gray-200 py-2 px-3 rounded-lg"
-            (click)="item.quantity > 1 && updateCartItem('-', item)"
-            [disabled]="item.quantity < 0"
-          >
-            -
-          </button>
-          <input
-            type="number"
-            [min]="1"
-            readonly
-            class="w-12 text-center mx-2"
-            [value]="item.quantity"
-          />
-          <button
-            class="bg-gray-200 py-2 px-3 rounded-lg"
-            (click)="updateCartItem('+', item)"
-          >
-            +
-          </button>
-        </div>
-        <button
-          class="bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded-lg mt-4"
-          (click)="removeFromCart(item)"
+    <div class="grid grid-cols-12 gap-4">
+      <div class="col-span-8 grid grid-cols-12 gap-4">
+        <div
+          *ngFor="let item of cartItems$ | async"
+          class="bg-white shadow p-4 rounded-lg col-span-6"
         >
-          Remove Items from Cart
-        </button>
+          <div
+            class="mb-2 flex flex-row flex-wrap justify-between items-center"
+          >
+            <img
+              [src]="item.product.imageUrl"
+              alt="Product Image"
+              class="w-1/2 h-1/2 object-cover rounded-lg"
+            />
+            <div>
+              <div
+                class="font-bold flex flex-row justify-between items-center mb-2"
+              >
+                {{ item.product.name }}
+
+                <span>
+                  <button
+                    class="bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded-lg mt-4"
+                    (click)="removeFromCart(item)"
+                  >
+                    <i class="pi pi-trash"></i></button
+                ></span>
+              </div>
+              <div class="text-gray-600 text-sm mb-2">
+                <span>
+                  {{ item.product.price | currency }}
+                </span>
+              </div>
+              <div class="text-gray-600 text-sm mb-2">
+                {{ item.product.description }}
+              </div>
+              <div class="flex items-center text-gray-600 text-sm mb-2">
+                <div class="mr-2">Quantity:</div>
+                <button
+                  class="bg-gray-200 py-2 px-3 rounded-lg"
+                  (click)="item.quantity > 1 && updateCartItem('-', item)"
+                  [disabled]="item.quantity < 0"
+                >
+                  -
+                </button>
+                <input
+                  type="number"
+                  [min]="1"
+                  readonly
+                  class="w-8 text-center mx-2"
+                  [value]="item.quantity"
+                />
+                <button
+                  class="bg-gray-200 py-2 px-3 rounded-lg"
+                  (click)="updateCartItem('+', item)"
+                >
+                  +
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-span-4 flex flex-col">
+        <div class="bg-gray-100 py-5 px-10">
+          <div class="text-lg font-bold">Cart Summary:</div>
+
+          <div class="flex flex-row item-center justify-between mx-20 mt-2">
+            <div><span class="font-bold">Total:</span></div>
+            <div>
+              <span class="ml-2 font-normal">{{ totalPrice | currency }}</span>
+            </div>
+          </div>
+          <div class="flex flex-row item-center justify-between mx-20 mt-2">
+            <div><span class="font-bold">Discount:</span></div>
+            <div>
+              <span class="ml-2 font-normal">{{ totalPrice | currency }}</span>
+            </div>
+          </div>
+          <div class="flex flex-row item-center justify-between mx-20 mt-2">
+            <div><span class="font-bold">Tax:</span></div>
+            <div>
+              <span class="ml-2 font-normal">{{ totalPrice | currency }}</span>
+            </div>
+          </div>
+          <div class="flex flex-row mt-5 item-center justify-center">
+            <button
+              class="bg-black text-white py-2 px-4 rounded-lg block"
+              (click)="checkout()"
+              routerLink="/checkout"
+            >
+              Proceed to Checkout
+            </button>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-  <div class="bg-gray-100 p-4">
-    <button
-      class="bg-black text-white py-2 px-4 rounded-lg block mx-auto"
-      (click)="checkout()"
-      routerLink="/checkout"
-    >
-      Checkout
-    </button>
   </div>
 </div>

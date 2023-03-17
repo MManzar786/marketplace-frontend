@@ -1,48 +1,53 @@
 <div class="container mx-auto px-4 lg:px-8 py-10">
   <h1 class="text-3xl font-bold mb-6">Checkout</h1>
-  <ng-container *ngFor="let item of cartItems$ | async">
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-      <div class="bg-white rounded-lg shadow-md overflow-hidden">
-        <img
-          class="w-full h-64 object-cover"
-          [src]="item.product.imageUrl"
-          alt="Product Image"
-        />
-        <div class="p-4">
-          <span>Title</span>
-          <h2 class="text-lg font-bold mb-2">{{ item.product.name }}</h2>
-          <span>Description</span>
-          <p class="text-gray-700 text-base mb-2">
-            {{ item.product.description }}
-          </p>
-          <span>Price</span>
-          <p class="text-gray-700 text-base mb-2">
-            {{ item.product.price | currency }}
-          </p>
-          {{ getTotalPrice(item) }}
-          <div class="flex items-center justify-between">
-            <label class="text-gray-700 text-base mb-2">Quantity:</label>
-            <p
-              class="w-16 py-1 px-2 border border-gray-400 rounded-lg"
-              readonly
-            >
-              {{ item.quantity }}
-            </p>
-          </div>
-        </div>
+  <div class="model flex justify-center">
+    <div class="payment">
+      <div class="receipt-box">
+        <h3>Reciept Summary</h3>
+        <table class="table">
+          <tr>
+            <td>120 x 2 nights</td>
+            <td>240.00 USD</td>
+          </tr>
+          <tr>
+            <td>Discount</td>
+            <td>0 USD</td>
+          </tr>
+          <tr>
+            <td>Subtotal</td>
+            <td>240 USD</td>
+          </tr>
+          <tr>
+            <td>Tax</td>
+            <td>10 USD</td>
+          </tr>
+          <tfoot>
+            <tr>
+              <td>Sum</td>
+              <td>$180</td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+      <div class="payment-info">
+        <h3>Payment Info</h3>
+        <form>
+          <label>Name on Credit Card</label>
+          <input type="text" name="firstname" value="Mickey" />
+
+          <label>Credit Card Number</label>
+          <input type="text" name="lastname" value="0000 1234 3141 3412" />
+
+          <label>Address</label>
+          <input
+            type="text"
+            name="firstname"
+            value="Street no 2 Sowan Garden Islamabad"
+          />
+          <br /><br />
+          <input class="btn" type="submit" value="Book Securly" />
+        </form>
       </div>
     </div>
-  </ng-container>
-  <div class="mt-8 flex items-center justify-between">
-    <div class="text-lg font-bold mb-2">Cart Summary</div>
-    <div class="mb-4">
-      <span class="font-bold">Total:</span>
-      <span class="ml-2">{{ totalPrice | currency }}</span>
-    </div>
-    <button
-      class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-    >
-      Place Order
-    </button>
   </div>
 </div>

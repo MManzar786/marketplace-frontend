@@ -6,6 +6,9 @@ import { AdminDashboardComponent } from './components/admin-dashboard/admin-dash
 import { ReactiveFormsModule } from '@angular/forms';
 import { DropdownModule } from 'primeng/dropdown';
 
+import { TabViewModule } from 'primeng/tabview';
+import { TableModule } from 'primeng/table';
+
 @NgModule({
   declarations: [AdminDashboardComponent],
   imports: [
@@ -13,6 +16,8 @@ import { DropdownModule } from 'primeng/dropdown';
     AdminRoutingModule,
     ReactiveFormsModule,
     DropdownModule,
+    TabViewModule,
+    TableModule,
   ],
 })
 export class AdminModule {}

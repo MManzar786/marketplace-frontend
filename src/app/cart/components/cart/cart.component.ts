@@ -9,6 +9,7 @@ import {
   INCREMENT_OPERATOR,
   USER_ID_LABEL,
 } from 'src/app/utils/constants';
+
 import { CartItemI } from '../../model/cart.model';
 
 @Component({
@@ -19,6 +20,8 @@ import { CartItemI } from '../../model/cart.model';
 export class CartComponent implements OnInit {
   cartItems$!: Observable<CartItemI[]>;
   cartItemsCount$!: Observable<number>;
+  totalPrice: number = 0;
+
   constructor(private store: Store) {}
   ngOnInit() {
     this.cartItemsCount$ = this.store.select(cartSelector.selectCartItemsCount);
@@ -57,5 +60,8 @@ export class CartComponent implements OnInit {
   }
   checkout() {
     throw new Error('Method not implemented.');
+  }
+  getTotalPrice(item: CartItemI): void {
+    this.totalPrice += item.quantity * item.product.price;
   }
 }
