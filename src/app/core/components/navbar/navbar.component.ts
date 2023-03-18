@@ -9,12 +9,8 @@ import * as cartSelector from '../../../state/cart/cart.selector';
 import { Observable } from 'rxjs';
 import { ProductI } from 'src/app/products/models/product.model';
 import { Router } from '@angular/router';
-import {
-  ROLE_LABEL,
-  TOKEN_LABEL,
-  USER_LABEL,
-  USER_ROLE,
-} from 'src/app/utils/constants';
+import { USER_LABEL, USER_ROLE } from 'src/app/utils/constants';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-navbar',
@@ -22,6 +18,9 @@ import {
   styleUrls: ['./navbar.component.css'],
 })
 export class NavbarComponent implements OnInit {
+  abc() {
+    this.toastr.success('Welcome ', 'aa');
+  }
   items: MenuItem[] = [];
   token$ = this.store.select(fromAuthSelector.selectToken);
   user$ = this.store.select(fromAuthSelector.selectUser);
@@ -31,7 +30,8 @@ export class NavbarComponent implements OnInit {
   cartItems$!: Observable<ProductI>;
   constructor(
     private store: Store<fromAuthReducer.State>,
-    private router: Router
+    private router: Router,
+    private toastr: ToastrService
   ) {}
   ngOnInit(): void {
     let loginSuccessResponse = JSON.parse(

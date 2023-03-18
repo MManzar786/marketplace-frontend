@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { catchError, Observable, of, tap } from 'rxjs';
 import { CartItemI } from 'src/app/cart/model/cart.model';
 import { OrderService } from 'src/app/core/services/order.service';
 import * as cartSelector from 'src/app/state/cart/cart.selector';
 import { USER_LABEL } from 'src/app/utils/constants';
 import { OrderItemsI } from '../../model/checkout.model';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-checkout',
@@ -18,7 +19,11 @@ export class CheckoutComponent implements OnInit {
   totalPrice: number = 0;
   form!: FormGroup;
   orderItems: OrderItemsI[] = [];
-  constructor(private store: Store, private orderService: OrderService) {}
+  constructor(
+    private store: Store,
+    private orderService: OrderService,
+    private toastr: ToastrService
+  ) {}
   ngOnInit(): void {
     this.cartItems$ = this.store.select(cartSelector.selectCartItems);
     this.form = new FormGroup({
@@ -41,9 +46,18 @@ export class CheckoutComponent implements OnInit {
       }
       this.orderService
         .addAnOrder(user.id, this.orderItems)
-        .subscribe((res) => {
-          console.log(res);
-        });
+        .pipe(
+          tap(() => {
+            this.toastr.success('Order placed successfully');
+          }),
+          catchError((error) => {
+            this.toastr.error('Error placing order');
+            return of(error);
+          })
+        )
+        .subscribe((res) => {});
+    } else {
+      this.toastr.warning('Please enter address');
     }
   }
 }

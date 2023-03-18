@@ -15,6 +15,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { CartEffects } from './state/cart/cart.effect';
 import { CartReducer } from './state/cart/cart.reducer';
 import { CoreModule } from './core/core.module';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [AppComponent],
@@ -29,6 +30,7 @@ import { CoreModule } from './core/core.module';
       product: ProductReducer,
       cart: CartReducer,
     }),
+    ToastrModule.forRoot({ positionClass: 'toast-bottom-right' }),
     EffectsModule.forRoot([AuthEffects, ProductEffects, CartEffects]),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
   ],

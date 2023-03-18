@@ -1,13 +1,17 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { catchError, from, map, mergeMap, of, switchMap } from 'rxjs';
+import { catchError, from, map, mergeMap, of, switchMap, tap } from 'rxjs';
 import { CartService } from 'src/app/core/services/cart.service';
-import { ProductService } from 'src/app/core/services/product.service';
+import { ToastrService } from 'ngx-toastr';
 import * as cartActions from 'src/app/state/cart/cart.action';
 
 @Injectable()
 export class CartEffects {
-  constructor(private actions$: Actions, private cartService: CartService) {}
+  constructor(
+    private actions$: Actions,
+    private cartService: CartService,
+    private toastr: ToastrService
+  ) {}
   loadCartItems$ = createEffect(() =>
     this.actions$.pipe(
       ofType(cartActions.loadCartRequest),
@@ -18,7 +22,10 @@ export class CartEffects {
               items: successResponse,
             })
           ),
-          catchError((error) => of(cartActions.loadCartFailure({ error })))
+          catchError((error) => {
+            this.toastr.error('Error loading cart');
+            return of(cartActions.loadCartFailure({ error }));
+          })
         )
       )
     )
@@ -29,12 +36,18 @@ export class CartEffects {
       ofType(cartActions.addItemToCart),
       mergeMap((action) =>
         this.cartService.saveCartItems(action.item, action.userId).pipe(
+          tap(() => {
+            this.toastr.success('Item added to cart successfully');
+          }),
           map(() =>
             cartActions.addItemToCartSuccess({
               item: action.item,
             })
           ),
-          catchError((error) => of(cartActions.loadCartFailure({ error })))
+          catchError((error) => {
+            this.toastr.error('Error adding item to cart');
+            return of(cartActions.loadCartFailure({ error }));
+          })
         )
       )
     )

@@ -1,18 +1,19 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { catchError, of, exhaustMap, map, tap, switchMap } from 'rxjs';
+import { catchError, of, map, tap, switchMap } from 'rxjs';
 import { AuthService } from 'src/app/core/services/auth.service';
-import { ROLE_LABEL, TOKEN_LABEL, USER_LABEL } from 'src/app/utils/constants';
+import { TOKEN_LABEL, USER_LABEL } from 'src/app/utils/constants';
 import * as AuthActions from './auth.actions';
-import { loginSuccessResponseI } from 'src/app/auth/model/auth.model';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable()
 export class AuthEffects {
   constructor(
     private actions$: Actions,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private toastr: ToastrService
   ) {}
   loginRequest$ = createEffect(() =>
     this.actions$.pipe(
@@ -21,10 +22,16 @@ export class AuthEffects {
         this.authService
           .signin(action.credentials.email, action.credentials.password)
           .pipe(
+            tap(() => {
+              this.toastr.success('Welcome to Marketplace!');
+            }),
             map((loginSuccessResponse) =>
               AuthActions.loginSuccess({ loginSuccessResponse })
             ),
-            catchError((error) => of(AuthActions.loginFailure({ error })))
+            catchError((error) => {
+              this.toastr.error('Login Failed !');
+              return of(AuthActions.loginFailure({ error }));
+            })
           )
       )
     )
