@@ -58,9 +58,7 @@ export class CartComponent implements OnInit {
   removeFromCart(cartItem: CartItemI) {
     this.store.dispatch(cartActions.removeItemFromCart({ cartItem }));
   }
-  checkout() {
-    throw new Error('Method not implemented.');
-  }
+  checkout() {}
   getTotalPrice(item: CartItemI): void {
     this.totalPrice += item.quantity * item.product.price;
   }

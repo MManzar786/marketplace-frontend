@@ -22,3 +22,5 @@ export const DECREMENT_OPERATOR = '-';
 export const TOKEN_LABEL = 'token';
 export const ROLE_LABEL = 'role';
 export const USER_ID_LABEL = 'user_id';
+export const USER_ROLE = 'ROLE_USER';
+export const ADMIN_ROLE = 'ROLE_ADMIN';
