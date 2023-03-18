@@ -8,8 +8,6 @@ import { ROLE_LABEL, TOKEN_LABEL } from 'src/app/utils/constants';
 })
 export class AuthService {
   private httpClient!: HttpClient;
-  private token: string | null = localStorage.getItem(TOKEN_LABEL);
-  private role: string | null = localStorage.getItem(ROLE_LABEL);
   constructor(private handler: HttpBackend) {
     this.httpClient = new HttpClient(handler);
   }
@@ -32,13 +30,5 @@ export class AuthService {
       email: email,
       password: password,
     });
-  }
-
-  getToken() {
-    return this.token;
-  }
-
-  getRole() {
-    return this.role;
   }
 }

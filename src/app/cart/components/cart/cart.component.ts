@@ -1,4 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  OnInit,
+} from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { ProductI } from 'src/app/products/models/product.model';
@@ -7,7 +12,6 @@ import * as cartSelector from 'src/app/state/cart/cart.selector';
 import {
   DECREMENT_OPERATOR,
   INCREMENT_OPERATOR,
-  USER_ID_LABEL,
 } from 'src/app/utils/constants';
 
 import { CartItemI } from '../../model/cart.model';
@@ -17,15 +21,25 @@ import { CartItemI } from '../../model/cart.model';
   templateUrl: './cart.component.html',
   styleUrls: ['./cart.component.css'],
 })
-export class CartComponent implements OnInit {
+export class CartComponent implements AfterViewInit {
   cartItems$!: Observable<CartItemI[]>;
   cartItemsCount$!: Observable<number>;
   totalPrice: number = 0;
 
-  constructor(private store: Store) {}
-  ngOnInit() {
+  constructor(
+    private store: Store,
+    private changeDetection: ChangeDetectorRef
+  ) {}
+
+  ngAfterViewInit(): void {
     this.cartItemsCount$ = this.store.select(cartSelector.selectCartItemsCount);
     this.cartItems$ = this.store.select(cartSelector.selectCartItems);
+    this.cartItems$.subscribe((cartItems) => {
+      cartItems.forEach((cartItem) => {
+        this.totalPrice += cartItem.product.price * cartItem.quantity;
+      });
+    });
+    this.changeDetection.detectChanges();
   }
 
   updateCartItem(operator: string, item: CartItemI) {
@@ -59,7 +73,4 @@ export class CartComponent implements OnInit {
     this.store.dispatch(cartActions.removeItemFromCart({ cartItem }));
   }
   checkout() {}
-  getTotalPrice(item: CartItemI): void {
-    this.totalPrice += item.quantity * item.product.price;
-  }
 }

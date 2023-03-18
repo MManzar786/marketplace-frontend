@@ -2,50 +2,36 @@
   <h1 class="text-3xl font-bold mb-6">Checkout</h1>
   <div class="model flex justify-center">
     <div class="payment">
-      <div class="receipt-box">
-        <h3>Reciept Summary</h3>
-        <table class="table">
-          <tr>
-            <td>120 x 2 nights</td>
-            <td>240.00 USD</td>
-          </tr>
-          <tr>
-            <td>Discount</td>
-            <td>0 USD</td>
-          </tr>
-          <tr>
-            <td>Subtotal</td>
-            <td>240 USD</td>
-          </tr>
-          <tr>
-            <td>Tax</td>
-            <td>10 USD</td>
-          </tr>
-          <tfoot>
-            <tr>
-              <td>Sum</td>
-              <td>$180</td>
-            </tr>
-          </tfoot>
-        </table>
+      <div class="receipt-summary">
+        <h3 class="receipt-summary__title">Receipt Summary</h3>
+
+        <div class="receipt-summary__items" *ngIf="cartItems$ | async">
+          <h4 class="receipt-summary__items-title">Selected Items:</h4>
+          <ul class="receipt-summary__items-list">
+            <li
+              *ngFor="let product of cartItems$ | async"
+              class="receipt-summary__items-item"
+            >
+              {{ product.product.name }} x {{ product.quantity }} = ${{
+                product.product.price * product.quantity
+              }}
+            </li>
+          </ul>
+          <h4 class="receipt-summary__total">Total: ${{ totalPrice }}</h4>
+        </div>
       </div>
+
       <div class="payment-info">
-        <h3>Payment Info</h3>
-        <form>
-          <label>Name on Credit Card</label>
-          <input type="text" name="firstname" value="Mickey" />
-
-          <label>Credit Card Number</label>
-          <input type="text" name="lastname" value="0000 1234 3141 3412" />
-
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
           <label>Address</label>
           <input
+            placeholder="Please Enter Your Address"
+            formControlName="address"
             type="text"
-            name="firstname"
-            value="Street no 2 Sowan Garden Islamabad"
+            name="address"
           />
           <br /><br />
-          <input class="btn" type="submit" value="Book Securly" />
+          <button type="submit" class="simple-button">Place Order</button>
         </form>
       </div>
     </div>

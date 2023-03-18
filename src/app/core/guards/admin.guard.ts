@@ -7,14 +7,14 @@ import {
   UrlTree,
 } from '@angular/router';
 import { Observable } from 'rxjs';
-import { ADMIN_ROLE } from 'src/app/utils/constants';
+import { ADMIN_ROLE, ROLE_LABEL, USER_LABEL } from 'src/app/utils/constants';
 import { AuthService } from '../services/auth.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AdminGuard implements CanActivate {
-  constructor(private router: Router, private authService: AuthService) {}
+  constructor(private router: Router) {}
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
@@ -23,7 +23,7 @@ export class AdminGuard implements CanActivate {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
-    let role = this.authService.getRole();
+    let role = JSON.parse(localStorage.getItem(USER_LABEL) || '{}')[ROLE_LABEL];
     if (role === ADMIN_ROLE) {
       return true;
     } else {

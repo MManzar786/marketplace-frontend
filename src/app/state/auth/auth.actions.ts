@@ -1,4 +1,5 @@
 import { createAction, props } from '@ngrx/store';
+import { loginSuccessResponseI } from 'src/app/auth/model/auth.model';
 
 export const loginRequest = createAction(
   '[Auth] Login Request',

@@ -3,12 +3,9 @@ import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, of, exhaustMap, map, tap, switchMap } from 'rxjs';
 import { AuthService } from 'src/app/core/services/auth.service';
-import {
-  ROLE_LABEL,
-  TOKEN_LABEL,
-  USER_ID_LABEL,
-} from 'src/app/utils/constants';
+import { ROLE_LABEL, TOKEN_LABEL, USER_LABEL } from 'src/app/utils/constants';
 import * as AuthActions from './auth.actions';
+import { loginSuccessResponseI } from 'src/app/auth/model/auth.model';
 
 @Injectable()
 export class AuthEffects {
@@ -39,8 +36,10 @@ export class AuthEffects {
         ofType(AuthActions.loginSuccess),
         tap(({ loginSuccessResponse }) => {
           localStorage.setItem(TOKEN_LABEL, loginSuccessResponse.token);
-          localStorage.setItem(ROLE_LABEL, loginSuccessResponse.role);
-          localStorage.setItem(USER_ID_LABEL, loginSuccessResponse.id);
+          localStorage.setItem(
+            USER_LABEL,
+            JSON.stringify(loginSuccessResponse)
+          );
           this.router.navigateByUrl('/home');
         })
       ),

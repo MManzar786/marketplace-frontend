@@ -1,18 +1,19 @@
 import { createReducer, on } from '@ngrx/store';
+import { loginSuccessResponseI } from 'src/app/auth/model/auth.model';
 import { loginFailure, loginSuccess, logout } from './auth.actions';
 
 // TODO
 // 'any' must be change to interface
 export interface State {
   token: string | null;
-  role: string | null;
+  user: loginSuccessResponseI | null;
   loginError?: string;
   loginState: boolean;
 }
 
 export const initialState: State = {
   token: null,
-  role: null,
+  user: null,
   loginState: false,
 };
 
@@ -22,7 +23,7 @@ const _authReducer = createReducer(
     return {
       ...state,
       token: loginSuccessResponse.token,
-      role: loginSuccessResponse.role,
+      user: loginSuccessResponse,
       loginState: true,
     };
   }),

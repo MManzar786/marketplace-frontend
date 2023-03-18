@@ -7,9 +7,9 @@ export const selectToken = createSelector(
   selectAuthState,
   (state) => state.token
 );
-export const selectRole = createSelector(
+export const selectUser = createSelector(
   selectAuthState,
-  (state) => state.role
+  (state) => state.user
 );
 
 export const selectState = createSelector(

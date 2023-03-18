@@ -12,7 +12,8 @@ import { Router } from '@angular/router';
 import {
   ROLE_LABEL,
   TOKEN_LABEL,
-  USER_ID_LABEL,
+  USER_LABEL,
+  USER_ROLE,
 } from 'src/app/utils/constants';
 
 @Component({
@@ -23,9 +24,9 @@ import {
 export class NavbarComponent implements OnInit {
   items: MenuItem[] = [];
   token$ = this.store.select(fromAuthSelector.selectToken);
-  role$ = this.store.select(fromAuthSelector.selectRole);
+  user$ = this.store.select(fromAuthSelector.selectUser);
   loginState$ = this.store.select(fromAuthSelector.selectState);
-  tokenExist: boolean = false;
+  isAdmin: boolean = false;
   cartItemsCount$!: Observable<any>;
   cartItems$!: Observable<ProductI>;
   constructor(
@@ -33,19 +34,22 @@ export class NavbarComponent implements OnInit {
     private router: Router
   ) {}
   ngOnInit(): void {
-    let userId: string | null = localStorage.getItem(USER_ID_LABEL);
-    if (userId) {
-      this.store.dispatch(
-        cartActions.loadCartRequest({ userId: parseInt(userId) })
-      );
+    let loginSuccessResponse = JSON.parse(
+      localStorage.getItem(USER_LABEL) || '{}'
+    );
+    if (Object.keys(loginSuccessResponse).length > 0) {
+      this.store.dispatch(authActions.loginSuccess({ loginSuccessResponse }));
     }
-    this.cartItemsCount$ = this.store.select(cartSelector.selectCartItemsCount);
-    this.cartItems$ = this.store.select(cartSelector.selectCartItems);
-    let token: string | null = localStorage.getItem(TOKEN_LABEL);
-    let role: string | null = localStorage.getItem(ROLE_LABEL);
-    if (token && role) {
-      let res: any = { token, role };
-    }
+    this.user$.subscribe((user) => {
+      if (user) {
+        this.cartItems$ = this.store.select(cartSelector.selectCartItems);
+        this.cartItemsCount$ = this.store.select(
+          cartSelector.selectCartItemsCount
+        );
+        this.store.dispatch(cartActions.loadCartRequest({ userId: user?.id }));
+        this.isAdmin = user.role === USER_ROLE ? false : true;
+      }
+    });
   }
   onLogoutClick() {
     localStorage.clear();

@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ProductI } from 'src/app/products/models/product.model';
-import { USER_ID_LABEL } from 'src/app/utils/constants';
+import { USER_LABEL } from 'src/app/utils/constants';
 import { environment } from 'src/environments/environment';
 import { CartItemI } from '../../cart/model/cart.model';
 
@@ -19,7 +19,7 @@ export class CartService {
     return this.http.post(`${environment.backendUrl}carts/add`, {
       productId: cartItem.product.id,
       quantity: cartItem.quantity,
-      userId: localStorage.getItem(USER_ID_LABEL),
+      userId: userId,
     });
   }
 }
