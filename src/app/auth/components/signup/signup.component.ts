@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/core/services/auth.service';
-import { passwordMatchValidator } from 'src/app/shared/validators/password-match.validator';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-signup',
@@ -10,7 +10,10 @@ import { passwordMatchValidator } from 'src/app/shared/validators/password-match
 })
 export class SignupComponent implements OnInit {
   signUpForm!: FormGroup;
-  constructor(private authService: AuthService) {}
+  constructor(
+    private authService: AuthService,
+    private toastr: ToastrService
+  ) {}
   ngOnInit(): void {
     this.initForm();
   }
@@ -42,10 +45,10 @@ export class SignupComponent implements OnInit {
         )
         .subscribe((res: any) => {
           if (res.success) {
-            alert('Register Successfull');
+            this.toastr.success('Registration Successfull');
           }
           (err: any) => {
-            console.log(err);
+            this.toastr.error('Registration Failed!');
           };
         });
     }
