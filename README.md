@@ -39,8 +39,20 @@ To run this application, you will need the following:
 <li>To start the application, run the following command: ng serve. The application will be available at http://localhost:4200/.</li>
 <li>To build the application for production, run the following command: ng build --prod.</li>
 <li>To Sign in the application as an admin, follow the following:</li>
-<h4 id="l5">Admin Panel Sign In</h4>
-<li>TODO.</li>
+<h4>Admin Panel</h4>
+<h4>Login Information:</h4>
+<ul>
+  <li><strong>Email:</strong> admin@e.com</li>
+  <li><strong>Password:</strong> password@1</li>
+</ul>
+
+<li>Once you are logged in, you will be directed to the product management page. Here, you can view a list of all existing products and their details. To add a new product, follow the steps below:</li>
+
+<li>Click on the "Admin Panel" button located on the top right corner of the page.</li>
+<li>Select 'Add a Product' Fill out the form with the necessary product details, such as the title, description, price, and category. Make sure to provide clear and accurate information.</li>
+<li>Upload an image of the product by clicking on the "Choose File" button and selecting the desired image from your device.</li>
+<li>Click on the "Submit" button to add the product to the database.</li>
+<li>Once the product is added successfully, you will receive a toastr message and the product will appear on the product management page.</li>
 
 ## <h2 id="l6">Conclusion:</h2>
 This ecommerce project uses the Model-View-Controller (MVC) design pattern to provide a clear separation of concerns between different components of the application. The project has four layers: controller layer, service layer, repository layer, and entity layer. The stack used for implementation is Spring Boot with JPA repository and Maven. The project provides features such as displaying products on the home page, adding products to the cart, viewing the cart, and placing an order through checkout.
