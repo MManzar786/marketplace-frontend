@@ -5,18 +5,8 @@ import { OrderService } from 'src/app/core/services/order.service';
 import { ProductService } from 'src/app/core/services/product.service';
 import { categoryI } from 'src/app/products/components/products/products.component';
 import { OrderI } from '../../model/order.model';
-export interface Product {
-  id?: string;
-  code?: string;
-  name?: string;
-  description?: string;
-  price?: number;
-  quantity?: number;
-  inventoryStatus?: string;
-  category?: string;
-  image?: string;
-  rating?: number;
-}
+import { ToastrService } from 'ngx-toastr';
+import { catchError, of, tap } from 'rxjs';
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -33,7 +23,8 @@ export class AdminDashboardComponent implements OnInit {
   constructor(
     private productService: ProductService,
     private orderService: OrderService,
-    private categoryService: CategoryService
+    private categoryService: CategoryService,
+    private toastrService: ToastrService
   ) {}
 
   ngOnInit(): void {
@@ -98,9 +89,21 @@ export class AdminDashboardComponent implements OnInit {
       formData.append('category', this.fc['category'].value);
       formData.append('price', this.fc['price'].value);
       formData.append('image', this.file);
-      this.productService.addProducts(formData).subscribe((res) => {
-        console.log(res);
-      });
+      this.productService
+        .addProducts(formData)
+        .pipe(
+          tap(() => {
+            this.toastrService.success('Product added successfully');
+          }),
+          catchError((error) => {
+            this.toastrService.error('Error adding order');
+            return of(error);
+          })
+        )
+        .subscribe((res) => {
+          this.initForm();
+          this.imageUrl = '';
+        });
     }
   }
 

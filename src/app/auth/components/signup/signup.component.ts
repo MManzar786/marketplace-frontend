@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { ToastrService } from 'ngx-toastr';
+import { catchError, of, tap } from 'rxjs';
 
 @Component({
   selector: 'app-signup',
@@ -43,13 +44,17 @@ export class SignupComponent implements OnInit {
           this.signUpForm.controls['email'].value,
           this.signUpForm.controls['password'].value
         )
-        .subscribe((res: any) => {
-          if (res.success) {
+        .pipe(
+          tap(() => {
             this.toastr.success('Registration Successfull');
-          }
-          (err: any) => {
+          }),
+          catchError((error) => {
             this.toastr.error('Registration Failed!');
-          };
+            return of(error);
+          })
+        )
+        .subscribe((res: any) => {
+          this.initForm();
         });
     }
   }
