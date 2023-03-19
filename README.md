@@ -38,8 +38,8 @@ To run this application, you will need the following:
 ## <h2 id="l5">Usage</h2>
 <li>To start the application, run the following command: ng serve. The application will be available at http://localhost:4200/.</li>
 <li>To build the application for production, run the following command: ng build --prod.</li>
-
-### <h2 id="l5">Admin Panel Sign In</h2>
+<li>To Sign in the application as an admin, follow the following:</li>
+<h4 id="l5">Admin Panel Sign In</h4>
 <li>TODO.</li>
 
 ## <h2 id="l6">Conclusion:</h2>
