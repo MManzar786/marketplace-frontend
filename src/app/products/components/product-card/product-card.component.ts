@@ -14,6 +14,7 @@ import { TOKEN_LABEL, USER_LABEL } from 'src/app/utils/constants';
 })
 export class ProductCardComponent {
   @Input() product!: ProductI;
+  @Input() cartItemId: number = 0;
   constructor(private store: Store, private route: Router) {}
 
   addToCart() {
@@ -21,6 +22,7 @@ export class ProductCardComponent {
     let user = JSON.parse(localStorage.getItem(USER_LABEL) || '{}');
     if (token && Object.keys(user).length > 0) {
       let cartItem: CartItemI = {
+        id: this.cartItemId,
         product: this.product,
         quantity: 1,
       };

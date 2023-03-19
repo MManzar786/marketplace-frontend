@@ -4,6 +4,10 @@ import { catchError, from, map, mergeMap, of, switchMap, tap } from 'rxjs';
 import { CartService } from 'src/app/core/services/cart.service';
 import { ToastrService } from 'ngx-toastr';
 import * as cartActions from 'src/app/state/cart/cart.action';
+import {
+  CartItemAddResponseI,
+  CartItemDeleteResponseI,
+} from 'src/app/cart/model/cart.model';
 
 @Injectable()
 export class CartEffects {
@@ -31,6 +35,26 @@ export class CartEffects {
     )
   );
 
+  deleteCartItems$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(cartActions.removeItemFromCartRequest),
+      mergeMap((action) =>
+        this.cartService.deleteCartItemsByCartId(action.cartItem.id).pipe(
+          tap(() => {
+            this.toastr.success('Item Deleted from cart successfully');
+          }),
+          map(() =>
+            cartActions.removeItemFromCartSuccess({ cartItem: action.cartItem })
+          ),
+          catchError((error) => {
+            this.toastr.error('Error deleting item from cart');
+            return of(cartActions.loadCartFailure({ error }));
+          })
+        )
+      )
+    )
+  );
+
   addItemToCart$ = createEffect(() =>
     this.actions$.pipe(
       ofType(cartActions.addItemToCart),
@@ -39,9 +63,10 @@ export class CartEffects {
           tap(() => {
             this.toastr.success('Item added to cart successfully');
           }),
-          map(() =>
+          map((response) =>
             cartActions.addItemToCartSuccess({
               item: action.item,
+              id: response.cartItem.id,
             })
           ),
           catchError((error) => {

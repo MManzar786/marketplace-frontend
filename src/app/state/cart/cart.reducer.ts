@@ -1,5 +1,5 @@
 import { createReducer, on } from '@ngrx/store';
-import { CartStateI } from 'src/app/cart/model/cart.model';
+import { CartItemI, CartStateI } from 'src/app/cart/model/cart.model';
 import {
   ERROR_STATUS_LABEL,
   INCREMENT_OPERATOR,
@@ -10,7 +10,7 @@ import {
   addItemToCartSuccess,
   loadCartFailure,
   loadCartSuccess,
-  removeItemFromCart,
+  removeItemFromCartSuccess,
   updateCartItem,
 } from './cart.action';
 
@@ -45,7 +45,7 @@ const _cartReducer = createReducer(
     };
   }),
 
-  on(addItemToCartSuccess, (state, { item }) => {
+  on(addItemToCartSuccess, (state, { item, id }) => {
     const existingCartItem = state.cartItems.find(
       (cartItem) => cartItem.product.id === item.product.id
     );
@@ -68,9 +68,10 @@ const _cartReducer = createReducer(
         status: SUCCESS_STATUS_LABEL,
       };
     } else {
+      let cartItem = updateIdInCart(item, id);
       return {
         ...state,
-        cartItems: [...state.cartItems, item],
+        cartItems: [...state.cartItems, cartItem],
         cartItemsCount: state.cartItemsCount + 1,
         error: null,
         status: SUCCESS_STATUS_LABEL,
@@ -105,7 +106,7 @@ const _cartReducer = createReducer(
     };
   }),
 
-  on(removeItemFromCart, (state, { cartItem }) => {
+  on(removeItemFromCartSuccess, (state, { cartItem }) => {
     return {
       ...state,
       cartItems: state.cartItems.filter(
@@ -120,4 +121,7 @@ const _cartReducer = createReducer(
 
 export function CartReducer(state: any, action: any) {
   return _cartReducer(state, action);
+}
+function updateIdInCart(cartItem: CartItemI, newId: number): CartItemI {
+  return { ...cartItem, id: newId };
 }

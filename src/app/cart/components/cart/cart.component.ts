@@ -47,9 +47,14 @@ export class CartComponent implements AfterViewInit {
       case INCREMENT_OPERATOR:
         {
           let quantity = item.quantity + 1;
-          let cartItem = { product: item.product, quantity: quantity };
+          let cartItem = {
+            product: item.product,
+            quantity: quantity,
+            id: item.id,
+          };
           this.store.dispatch(
             cartActions.updateCartItem({
+              id: cartItem.id,
               item: cartItem,
               quantityOperator: INCREMENT_OPERATOR,
             })
@@ -59,9 +64,14 @@ export class CartComponent implements AfterViewInit {
 
       default:
         let quantity = item.quantity - 1;
-        let cartItem = { product: item.product, quantity: quantity };
+        let cartItem = {
+          product: item.product,
+          quantity: quantity,
+          id: item.id,
+        };
         this.store.dispatch(
           cartActions.updateCartItem({
+            id: item.id,
             item: cartItem,
             quantityOperator: DECREMENT_OPERATOR,
           })
@@ -70,7 +80,6 @@ export class CartComponent implements AfterViewInit {
   }
 
   removeFromCart(cartItem: CartItemI) {
-    this.store.dispatch(cartActions.removeItemFromCart({ cartItem }));
+    this.store.dispatch(cartActions.removeItemFromCartRequest({ cartItem }));
   }
-  checkout() {}
 }
