@@ -40,7 +40,7 @@ export class CheckoutComponent implements OnInit {
     });
   }
   onSubmit() {
-    if (this.form.valid) {
+    if (this.form.valid && this.totalPrice > 0) {
       let user = JSON.parse(localStorage.getItem(USER_LABEL) || '{}');
       if (Object.keys(user).length > 0) {
       }
@@ -57,7 +57,9 @@ export class CheckoutComponent implements OnInit {
         )
         .subscribe((res) => {});
     } else {
-      this.toastr.warning('Please enter address');
+      this.totalPrice == 0
+        ? this.toastr.warning('No Items Found')
+        : this.toastr.warning('Please enter address');
     }
   }
 }

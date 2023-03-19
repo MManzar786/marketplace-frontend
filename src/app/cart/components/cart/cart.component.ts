@@ -35,6 +35,7 @@ export class CartComponent implements AfterViewInit {
     this.cartItemsCount$ = this.store.select(cartSelector.selectCartItemsCount);
     this.cartItems$ = this.store.select(cartSelector.selectCartItems);
     this.cartItems$.subscribe((cartItems) => {
+      this.totalPrice = 0;
       cartItems.forEach((cartItem) => {
         this.totalPrice += cartItem.product.price * cartItem.quantity;
       });
